@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Great+Vibes&amp;family=Tiro+Devanagari+Hindi&amp;display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;padding:0;background:#f5e4e1;overflow-x:clip;}
+html{margin:0;padding:0;background:#f5e4e1;overflow-x:clip;}body{margin:0;padding:0;background:transparent;overflow-x:clip;}
 *{box-sizing:border-box;}
 a{color:#a8455f;}
 a:hover{color:#7d2c42;}
@@ -27,16 +27,6 @@ a:hover{color:#7d2c42;}
 </helmet>
 
 <div style="font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;overflow-x:clip;position:relative;">
-
-  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:#f5e4e1;transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;">
-    <sc-if value="{{ landscape }}" hint-placeholder-val="{{ false }}">
-      <video src="./assets/bg-landscape.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-    </sc-if>
-    <sc-if value="{{ portrait }}" hint-placeholder-val="{{ true }}">
-      <video src="./assets/bg-portrait.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-    </sc-if>
-  </div>
-  {{ petalLayer }}
 
   <sc-if value="{{ showMusicBtn }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ toggleMute }}" title="Music on / off" style="position:fixed;bottom:18px;right:16px;z-index:70;width:46px;height:46px;border-radius:50%;background:rgba(255,250,246,.9);border:1px solid #c9a15c;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(150,80,90,.28);font-size:20px;line-height:1;user-select:none;">{{ musicIcon }}</div>
@@ -297,6 +287,35 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.land = this.isLandscape();
+    // Mount the fixed background + petals directly on <body> so no ancestor can
+    // turn position:fixed into a scrolling (absolute-like) layer on mobile.
+    const mkHost = (z, bg) => {
+      const d = document.createElement('div');
+      d.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;overflow:hidden;pointer-events:none;z-index:' + z + ';transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;' + (bg ? 'background:' + bg + ';' : '');
+      document.body.appendChild(d);
+      return d;
+    };
+    this._bgHost = mkHost(-1, '#f5e4e1');
+    this._petalHost = mkHost(40, '');
+    this._bgVideo = document.createElement('video');
+    this._bgVideo.muted = true; this._bgVideo.loop = true; this._bgVideo.autoplay = true; this._bgVideo.preload = 'auto'; this._bgVideo.playsInline = true;
+    this._bgVideo.setAttribute('muted', ''); this._bgVideo.setAttribute('playsinline', '');
+    this._bgVideo.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    this._bgHost.appendChild(this._bgVideo);
+    this._petalRoot = window.ReactDOM.createRoot(this._petalHost);
+    this.petalCount = () => {
+      if (!(this.props.petals ?? true)) return 0;
+      const nMax = this.props.petalCount ?? 28;
+      const small = typeof window !== 'undefined' && window.innerWidth < 600;
+      return Math.max(0, Math.min(80, small ? Math.min(nMax, 12) : nMax));
+    };
+    this.refreshLayers = () => {
+      const want = this.land ? './assets/bg-landscape.mp4' : './assets/bg-portrait.mp4';
+      if (this._bgVideo && this._bgVideo.getAttribute('src') !== want) { this._bgVideo.setAttribute('src', want); this._bgVideo.load(); }
+      if (this._bgVideo) { this._bgVideo.muted = true; this._bgVideo.play().catch(() => {}); }
+      if (this._petalRoot) this._petalRoot.render(React.createElement(React.Fragment, null, this.getPetals(this.petalCount())));
+    };
+    this.refreshLayers();
     const mu = String(this.props.musicUrl || '').trim();
     if (mu) {
       this.bgm = new Audio(mu);
@@ -307,7 +326,7 @@ class Component extends DCLogic {
     this.startMusic = () => { if (this._bgmOn || this.state.muted || !this.bgm || !this._musicOk) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
     this.onResize = () => {
       const l = this.isLandscape();
-      if (l !== this.land) { this.land = l; this.forceUpdate(); setTimeout(() => this.applyOrientation(), 50); }
+      if (l !== this.land) { this.land = l; this.forceUpdate(); this.refreshLayers && this.refreshLayers(); setTimeout(() => this.applyOrientation(), 50); }
     };
     window.addEventListener('resize', this.onResize);
     this.kick = () => { this.playVideos && this.playVideos(); this.startMusic && this.startMusic(); };
@@ -326,7 +345,7 @@ class Component extends DCLogic {
     this.playVideos();
     document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
 
   getPetals(n) {
     if (this._petals && this._petals.length === n) return this._petals;
@@ -443,10 +462,6 @@ class Component extends DCLogic {
 
   renderVals() {
     const showCover = this.props.showCover ?? true;
-    const petals = this.props.petals ?? true;
-    const nMax = this.props.petalCount ?? 28;
-    const small = typeof window !== 'undefined' && window.innerWidth < 600;
-    const n = Math.max(0, Math.min(80, small ? Math.min(nMax, 12) : nMax));
     const { phase } = this.state;
     const d = Math.max(0, this.target - this.state.now);
     const pad = v => String(v).padStart(2, '0');
@@ -481,8 +496,7 @@ class Component extends DCLogic {
         { value: pad(Math.floor(d / 36e5) % 24), en: 'Hours', hi: 'घंटे' },
         { value: pad(Math.floor(d / 6e4) % 60), en: 'Mins', hi: 'मिनट' },
         { value: pad(Math.floor(d / 1e3) % 60), en: 'Secs', hi: 'सेकंड' }
-      ],
-      petalLayer: petals ? React.createElement('div', { style: { position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 40, overflow: 'hidden', transform: 'translateZ(0)', willChange: 'transform' } }, this.getPetals(n)) : null
+      ]
     };
   }
 }
