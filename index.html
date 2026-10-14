@@ -270,7 +270,7 @@ a:hover{color:#7d2c42;}
   </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;musicUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
 class Component extends DCLogic {
   state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.initialSide(), rErr: false, rsvpDone: false, muted: false };
   target = new Date('2026-11-21T00:00:00+05:30').getTime();
@@ -297,11 +297,14 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.land = this.isLandscape();
-    this.bgm = new Audio('./assets/music.mp3');
-    this.bgm.loop = true; this.bgm.volume = 0.55; this.bgm.preload = 'auto';
-    // Only surface the music toggle once a real, playable track has loaded.
-    this.bgm.addEventListener('canplay', () => { if (!this._musicOk) { this._musicOk = true; this.forceUpdate(); } });
-    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this._musicOk) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
+    const mu = String(this.props.musicUrl || '').trim();
+    if (mu) {
+      this.bgm = new Audio(mu);
+      this.bgm.loop = true; this.bgm.volume = 0.55; this.bgm.preload = 'auto';
+      // Only surface the music toggle once a real, playable track has loaded.
+      this.bgm.addEventListener('canplay', () => { if (!this._musicOk) { this._musicOk = true; this.forceUpdate(); } });
+    }
+    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this.bgm || !this._musicOk) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
     this.onResize = () => {
       const l = this.isLandscape();
       if (l !== this.land) { this.land = l; this.forceUpdate(); setTimeout(() => this.applyOrientation(), 50); }
