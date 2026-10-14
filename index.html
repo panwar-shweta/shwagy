@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Great+Vibes&amp;family=Tiro+Devanagari+Hindi&amp;display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;padding:0;background:#f5e4e1;}
+html,body{margin:0;padding:0;background:#f5e4e1;overflow-x:clip;}
 *{box-sizing:border-box;}
 a{color:#a8455f;}
 a:hover{color:#7d2c42;}
@@ -26,7 +26,7 @@ a:hover{color:#7d2c42;}
 </style>
 </helmet>
 
-<div style="font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;overflow-x:hidden;position:relative;">
+<div style="font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;overflow-x:clip;position:relative;">
 
   <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:#f5e4e1;transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;">
     <sc-if value="{{ landscape }}" hint-placeholder-val="{{ false }}">
@@ -299,7 +299,9 @@ class Component extends DCLogic {
     this.land = this.isLandscape();
     this.bgm = new Audio('./assets/music.mp3');
     this.bgm.loop = true; this.bgm.volume = 0.55; this.bgm.preload = 'auto';
-    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this.bgm) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
+    // Only surface the music toggle once a real, playable track has loaded.
+    this.bgm.addEventListener('canplay', () => { if (!this._musicOk) { this._musicOk = true; this.forceUpdate(); } });
+    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this._musicOk) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
     this.onResize = () => {
       const l = this.isLandscape();
       if (l !== this.land) { this.land = l; this.forceUpdate(); setTimeout(() => this.applyOrientation(), 50); }
@@ -465,7 +467,7 @@ class Component extends DCLogic {
       },
       muted: this.state.muted,
       musicIcon: this.state.muted ? '🔇' : '🔊',
-      showMusicBtn: (phase !== 'closed') || (showCover === false),
+      showMusicBtn: !!this._musicOk && ((phase !== 'closed') || (showCover === false)),
       toggleMute: () => {
         const m = !this.state.muted;
         this.setState({ muted: m });
