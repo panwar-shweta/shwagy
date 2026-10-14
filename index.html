@@ -18,7 +18,7 @@ html,body{margin:0;padding:0;background:#f5e4e1;}
 a{color:#a8455f;}
 a:hover{color:#7d2c42;}
 @keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(0deg);}100%{transform:translate3d(var(--dx),112vh,0) rotate(var(--rot));}}
-@keyframes sway{0%,100%{margin-left:0;}50%{margin-left:28px;}}
+@keyframes sway{0%,100%{transform:translateX(0);}50%{transform:translateX(28px);}}
 @keyframes shimmer{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
 @keyframes pulse{0%,100%{transform:translateY(0);opacity:.55;}50%{transform:translateY(8px);opacity:1;}}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(1.5deg);}}
@@ -28,7 +28,7 @@ a:hover{color:#7d2c42;}
 
 <div style="font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;overflow-x:hidden;position:relative;">
 
-  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:#f5e4e1;">
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:#f5e4e1;transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;">
     <sc-if value="{{ landscape }}" hint-placeholder-val="{{ false }}">
       <video src="./assets/bg-landscape.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </sc-if>
@@ -37,6 +37,10 @@ a:hover{color:#7d2c42;}
     </sc-if>
   </div>
   {{ petalLayer }}
+
+  <sc-if value="{{ showMusicBtn }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ toggleMute }}" title="Music on / off" style="position:fixed;bottom:18px;right:16px;z-index:70;width:46px;height:46px;border-radius:50%;background:rgba(255,250,246,.9);border:1px solid #c9a15c;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(150,80,90,.28);font-size:20px;line-height:1;user-select:none;">{{ musicIcon }}</div>
+  </sc-if>
 
   <sc-if value="{{ showCoverNow }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ openCover }}" style="position:fixed;inset:0;z-index:60;cursor:pointer;">
@@ -129,7 +133,7 @@ a:hover{color:#7d2c42;}
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:400px;">
         <sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
-          <div style="background:rgba(255,255,255,.7);border:1px solid #dcbd84;border-radius:6px;padding:14px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;backdrop-filter:blur(4px);">
+          <div style="background:rgba(255,255,255,.85);border:1px solid #dcbd84;border-radius:6px;padding:14px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;">
             <div style="font-size:34px;font-weight:600;line-height:1;color:#8a3a4e;font-variant-numeric:tabular-nums;">{{ c.value }}</div>
             <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7a5040;">{{ c.en }}</div>
             <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#8a6050;">{{ c.hi }}</div>
@@ -268,7 +272,7 @@ a:hover{color:#7d2c42;}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
 class Component extends DCLogic {
-  state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.initialSide(), rErr: false, rsvpDone: false };
+  state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.initialSide(), rErr: false, rsvpDone: false, muted: false };
   target = new Date('2026-11-21T00:00:00+05:30').getTime();
 
   initialSide() {
@@ -293,12 +297,15 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.land = this.isLandscape();
+    this.bgm = new Audio('./assets/music.mp3');
+    this.bgm.loop = true; this.bgm.volume = 0.55; this.bgm.preload = 'auto';
+    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this.bgm) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
     this.onResize = () => {
       const l = this.isLandscape();
       if (l !== this.land) { this.land = l; this.forceUpdate(); setTimeout(() => this.applyOrientation(), 50); }
     };
     window.addEventListener('resize', this.onResize);
-    this.kick = () => this.playVideos && this.playVideos();
+    this.kick = () => { this.playVideos && this.playVideos(); this.startMusic && this.startMusic(); };
     ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.addEventListener(ev, this.kick, { passive: true }));
     this.forceUpdate();
     setTimeout(() => this.applyOrientation(), 50);
@@ -314,7 +321,7 @@ class Component extends DCLogic {
     this.playVideos();
     document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); }
 
   getPetals(n) {
     if (this._petals && this._petals.length === n) return this._petals;
@@ -432,7 +439,9 @@ class Component extends DCLogic {
   renderVals() {
     const showCover = this.props.showCover ?? true;
     const petals = this.props.petals ?? true;
-    const n = Math.max(0, Math.min(80, this.props.petalCount ?? 28));
+    const nMax = this.props.petalCount ?? 28;
+    const small = typeof window !== 'undefined' && window.innerWidth < 600;
+    const n = Math.max(0, Math.min(80, small ? Math.min(nMax, 12) : nMax));
     const { phase } = this.state;
     const d = Math.max(0, this.target - this.state.now);
     const pad = v => String(v).padStart(2, '0');
@@ -451,7 +460,16 @@ class Component extends DCLogic {
         if (phase !== 'closed') return;
         this.setState({ phase: 'opening' });
         this.playVideos && this.playVideos();
+        this.startMusic && this.startMusic();
         this.t = setTimeout(() => this.setState({ phase: 'open' }), 1400);
+      },
+      muted: this.state.muted,
+      musicIcon: this.state.muted ? '🔇' : '🔊',
+      showMusicBtn: (phase !== 'closed') || (showCover === false),
+      toggleMute: () => {
+        const m = !this.state.muted;
+        this.setState({ muted: m });
+        if (this.bgm) { if (m) { this.bgm.pause(); } else { this._bgmOn = true; this.bgm.play().catch(() => {}); } }
       },
       countdown: [
         { value: Math.floor(d / 864e5), en: 'Days', hi: 'दिन' },
@@ -459,7 +477,7 @@ class Component extends DCLogic {
         { value: pad(Math.floor(d / 6e4) % 60), en: 'Mins', hi: 'मिनट' },
         { value: pad(Math.floor(d / 1e3) % 60), en: 'Secs', hi: 'सेकंड' }
       ],
-      petalLayer: petals ? React.createElement('div', { style: { position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 40, overflow: 'hidden' } }, this.getPetals(n)) : null
+      petalLayer: petals ? React.createElement('div', { style: { position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 40, overflow: 'hidden', transform: 'translateZ(0)', willChange: 'transform' } }, this.getPetals(n)) : null
     };
   }
 }
