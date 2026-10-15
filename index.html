@@ -39,7 +39,7 @@ a:hover{color:#7d2c42;}
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .6s ease,transform .8s ease;opacity:{{ sealOpacity }};transform:scale({{ sealScale }});padding:24px;text-align:center;">
         <div style="font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:#7a3b4a;">You are invited</div>
         <div style="width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f7e3b4,#d4af6a 55%,#a9803d);display:flex;align-items:center;justify-content:center;animation:glow 2.6s ease-in-out infinite;border:3px solid #f6e6c2;">
-          <div style="font-family:'Great Vibes',cursive;font-size:58px;color:#6e3a2a;line-height:1;padding-top:6px;">S&amp;P</div>
+          <div style="font-family:'Great Vibes',cursive;font-size:58px;color:#6e3a2a;line-height:1;padding-top:6px;">{{ seal }}</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="font-size:18px;letter-spacing:.24em;text-transform:uppercase;color:#6e2f40;font-weight:600;">Tap to open</div>
@@ -75,8 +75,8 @@ a:hover{color:#7d2c42;}
           <div style="flex:1;height:1px;background:linear-gradient(90deg,#c9a15c,transparent);"></div>
         </div>
 
-        <div style="font-size:clamp(26px,7.5vw,32px);font-weight:700;letter-spacing:.08em;color:#6e3d22;">SHWETA &amp; PRAGY</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:23px;color:#6e3d22;">श्वेता &amp; प्रज्ञ</div>
+        <div style="font-size:clamp(26px,7.5vw,32px);font-weight:700;letter-spacing:.08em;color:#6e3d22;">{{ namesEn }}</div>
+        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:23px;color:#6e3d22;">{{ namesHi }}</div>
 
         <div style="display:flex;align-items:center;gap:10px;width:78%;margin:14px 0 10px;">
           <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c9a15c);"></div>
@@ -186,20 +186,6 @@ a:hover{color:#7d2c42;}
               <input type="tel" value="{{ rPhone }}" onChange="{{ setPhone }}" placeholder="+91" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
             </label>
             <div style="display:flex;flex-direction:column;gap:8px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Whose side? · किस पक्ष से?</span>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <sc-for list="{{ sideOpts }}" as="o" hint-placeholder-count="2">
-                  <button type="button" onClick="{{ o.pick }}" style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;padding:12px 8px;border-radius:6px;cursor:pointer;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s;">
-                    <span>{{ o.en }}</span>
-                    <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;font-weight:400;">{{ o.hi }}</span>
-                  </button>
-                </sc-for>
-              </div>
-              <sc-if value="{{ sideErr }}" hint-placeholder-val="{{ false }}">
-                <span style="font-size:14px;color:#b13f5d;">Please pick a side · कृपया पक्ष चुनें</span>
-              </sc-if>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
               <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Will you attend? · क्या आप आएंगे?</span>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
                 <sc-for list="{{ attendOpts }}" as="o" hint-placeholder-count="2">
@@ -248,7 +234,7 @@ a:hover{color:#7d2c42;}
     <div data-reveal="1" style="position:relative;z-index:2;max-width:480px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;">
       <div style="font-size:17px;letter-spacing:.24em;text-transform:uppercase;color:#8a5a3c;">With love &amp; blessings</div>
       <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:17px;color:#8a6050;text-wrap:pretty;">आपकी उपस्थिति हमारे लिए आशीर्वाद होगी</div>
-      <div style="font-family:'Great Vibes',cursive;font-size:clamp(54px,16vw,80px);line-height:1.1;color:#b13f5d;margin-top:10px;">Shweta &amp; Pragy</div>
+      <div style="font-family:'Great Vibes',cursive;font-size:clamp(54px,16vw,80px);line-height:1.1;color:#b13f5d;margin-top:10px;">{{ namesScript }}</div>
       <div style="font-size:18px;letter-spacing:.3em;color:#8a5a3c;">21 · 11 · 2026</div>
     </div>
     <div data-portrait-only="1" style="position:absolute;bottom:0;left:0;width:42%;max-width:340px;aspect-ratio:3/4;z-index:2;overflow:hidden;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);">
@@ -262,17 +248,23 @@ a:hover{color:#7d2c42;}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;musicUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./assets/music.mp3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
 class Component extends DCLogic {
-  state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.initialSide(), rErr: false, rsvpDone: false, muted: false };
+  state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.whichSide(), rsvpDone: false, muted: false };
   target = new Date('2026-11-21T00:00:00+05:30').getTime();
 
-  initialSide() {
+  // Which family's version is this page? Groom's version lives at /groom(.html);
+  // everything else is the bride's version. (?for=groom also forces it.)
+  whichSide() {
     try {
-      const sp = new URLSearchParams(location.search);
-      const raw = (sp.get('side') || sp.get('s') || '').toLowerCase();
-      if (/^(g|groom|p|pragy|var)/.test(raw)) return 'groom';
-      if (/^(b|bride|s|shweta|vadhu)/.test(raw)) return 'bride';
+      const path = (location.pathname || '').toLowerCase();
+      const q = (new URLSearchParams(location.search).get('for') || '').toLowerCase();
+      if (/groom/.test(path) || /^(g|groom|p|pragy)/.test(q)) return 'groom';
     } catch (e) {}
-    return '';
+    return 'bride';
+  }
+  coupleNames() {
+    return this.whichSide() === 'groom'
+      ? { namesEn: 'PRAGY & SHWETA', namesHi: 'प्रज्ञ & श्वेता', namesScript: 'Pragy & Shweta', seal: 'P&S', title: 'Pragy & Shweta · 21.11.2026', side: 'groom', sideLabel: 'Groom (Pragy)' }
+      : { namesEn: 'SHWETA & PRAGY', namesHi: 'श्वेता & प्रज्ञ', namesScript: 'Shweta & Pragy', seal: 'S&P', title: 'Shweta & Pragy · 21.11.2026', side: 'bride', sideLabel: 'Bride (Shweta)' };
   }
 
   isLandscape() { return window.innerWidth > window.innerHeight && window.innerWidth >= 900; }
@@ -287,6 +279,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.land = this.isLandscape();
+    try { document.title = this.coupleNames().title; } catch (e) {}
     // Mount the fixed background + petals directly on <body> so no ancestor can
     // turn position:fixed into a scrolling (absolute-like) layer on mobile.
     const mkHost = (z, bg) => {
@@ -346,6 +339,7 @@ class Component extends DCLogic {
     document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
   }
   componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
+  componentDidUpdate() { try { const t = this.coupleNames().title; if (document.title !== t) document.title = t; } catch (e) {} }
 
   getPetals(n) {
     if (this._petals && this._petals.length === n) return this._petals;
@@ -419,27 +413,21 @@ class Component extends DCLogic {
       const on = s.rAttend === key;
       return { en, hi, pick: () => this.setState({ rAttend: key }), bg: on ? '#b13f5d' : '#fff', color: on ? '#fff8f3' : '#6e3d22', border: on ? '#b13f5d' : '#d9bd85' };
     };
-    const sideOpt = (key, en, hi) => {
-      const on = s.rSide === key;
-      return { en, hi, pick: () => this.setState({ rSide: key, rErr: false }), bg: on ? '#b13f5d' : '#fff', color: on ? '#fff8f3' : '#6e3d22', border: on ? '#b13f5d' : '#d9bd85' };
-    };
+    const names = this.coupleNames();
     return {
       rsvpOpen: !s.rsvpDone, rsvpDone: s.rsvpDone, attending: yes,
       rName: s.rName, rPhone: s.rPhone, rGuests: s.rGuests, rMsg: s.rMsg,
-      sideErr: s.rErr,
       setName: e => this.setState({ rName: e.target.value }),
       setPhone: e => this.setState({ rPhone: e.target.value }),
       setMsg: e => this.setState({ rMsg: e.target.value }),
       incGuests: () => this.setState(p => ({ rGuests: Math.min(10, p.rGuests + 1) })),
       decGuests: () => this.setState(p => ({ rGuests: Math.max(1, p.rGuests - 1) })),
       attendOpts: [opt('yes', 'Joyfully accept', 'ज़रूर आएंगे'), opt('no', 'Regretfully decline', 'नहीं आ पाएंगे')],
-      sideOpts: [sideOpt('groom', "Groom's side", 'वर पक्ष · प्रज्ञ'), sideOpt('bride', "Bride's side", 'वधू पक्ष · श्वेता')],
       thanksEn: yes ? `We can't wait to celebrate with you, ${s.rName.split(' ')[0] || 'dear guest'}!` : 'You will be missed. Thank you for your blessings.',
       thanksHi: yes ? 'आपसे मिलने का इंतज़ार रहेगा' : 'आपकी शुभकामनाओं के लिए धन्यवाद',
       submitRsvp: e => {
         e.preventDefault();
-        if (!s.rSide) { this.setState({ rErr: true }); return; }
-        const sideLabel = s.rSide === 'groom' ? 'Groom (Pragy)' : 'Bride (Shweta)';
+        const sideLabel = names.sideLabel;
         const payload = {
           name: s.rName, phone: s.rPhone, side: sideLabel,
           attending: yes ? 'Yes' : 'No', guests: yes ? String(s.rGuests) : '0',
@@ -451,7 +439,7 @@ class Component extends DCLogic {
         }
         const num = String(this.props.whatsappNumber || '').replace(/\D/g, '');
         if (num) {
-          const txt = `RSVP – Shweta & Pragy (21 Nov 2026)\nName: ${s.rName}\nPhone: ${s.rPhone || '-'}\nSide: ${sideLabel}\nAttending: ${yes ? 'Yes' : 'No'}${yes ? `\nGuests: ${s.rGuests}` : ''}${s.rMsg ? `\nWishes: ${s.rMsg}` : ''}`;
+          const txt = `RSVP – ${names.namesScript} (21 Nov 2026)\nName: ${s.rName}\nPhone: ${s.rPhone || '-'}\nSide: ${sideLabel}\nAttending: ${yes ? 'Yes' : 'No'}${yes ? `\nGuests: ${s.rGuests}` : ''}${s.rMsg ? `\nWishes: ${s.rMsg}` : ''}`;
           window.open(`https://wa.me/${num}?text=${encodeURIComponent(txt)}`, '_blank');
         }
         this.setState({ rsvpDone: true });
@@ -469,6 +457,7 @@ class Component extends DCLogic {
     return {
       ...this.buildDecor(),
       ...this.rsvpVals(),
+      ...this.coupleNames(),
       landscape: !!this.land,
       portrait: !this.land,
       showCoverNow: showCover && phase !== 'open',
