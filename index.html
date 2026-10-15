@@ -1,494 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
 <title>Shweta &amp; Pragy · 21.11.2026</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Wedding invitation — Shweta &amp; Pragy, 21 November 2026, Ghaziabad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Great+Vibes&amp;family=Tiro+Devanagari+Hindi&amp;display=swap" rel="stylesheet">
 <style>
-html{margin:0;padding:0;background:#f5e4e1;overflow-x:clip;}body{margin:0;padding:0;background:transparent;overflow-x:clip;}
-*{box-sizing:border-box;}
-a{color:#a8455f;}
-a:hover{color:#7d2c42;}
-@keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(0deg);}100%{transform:translate3d(var(--dx),112vh,0) rotate(var(--rot));}}
-@keyframes sway{0%,100%{transform:translateX(0);}50%{transform:translateX(28px);}}
-@keyframes shimmer{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
-@keyframes pulse{0%,100%{transform:translateY(0);opacity:.55;}50%{transform:translateY(8px);opacity:1;}}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(1.5deg);}}
-@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(212,175,106,.5),0 10px 30px rgba(140,70,80,.25);}50%{box-shadow:0 0 0 14px rgba(212,175,106,0),0 10px 30px rgba(140,70,80,.25);}}
+  html,body{margin:0;padding:0;min-height:100%;background:#f5e4e1;overflow-x:clip;font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;}
+  *{box-sizing:border-box;}
+  @keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(0deg);}100%{transform:translate3d(var(--dx),112vh,0) rotate(var(--rot));}}
+  @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(212,175,106,.5),0 10px 30px rgba(140,70,80,.25);}50%{box-shadow:0 0 0 12px rgba(212,175,106,0),0 10px 30px rgba(140,70,80,.25);}}
+  .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#f5e4e1;transform:translateZ(0);will-change:transform;}
+  .bg video{width:100%;height:100%;object-fit:cover;display:block;}
+  .bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 32%,rgba(255,250,246,.38),rgba(245,228,225,.74) 78%);}
+  .petals{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none;transform:translateZ(0);}
+  .petal{position:absolute;top:0;border-radius:150% 0 150% 0;background:linear-gradient(135deg,#fde2e7,#f29bb0);opacity:.8;box-shadow:0 2px 4px rgba(180,80,100,.15);}
+  .wrap{position:relative;z-index:2;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:34px 20px;}
+  .card{width:100%;max-width:450px;background:rgba(255,250,246,.9);border:1.5px solid #c9a15c;border-radius:14px;padding:12px;box-shadow:0 20px 54px rgba(150,80,90,.24);}
+  .inner{border:1px solid #e3c991;border-radius:9px;padding:40px 24px 32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;}
+  .seal{width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f7e3b4,#d4af6a 55%,#a9803d);display:flex;align-items:center;justify-content:center;border:3px solid #f6e6c2;animation:glow 2.8s ease-in-out infinite;margin-bottom:10px;}
+  .seal span{font-family:'Great Vibes',cursive;font-size:40px;color:#6e3a2a;line-height:1;padding-top:4px;}
+  .invited{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:#7a3b4a;}
+  .names{font-family:'Great Vibes',cursive;font-size:clamp(44px,13vw,60px);line-height:1.05;color:#9a6a22;text-shadow:0 1px 0 rgba(255,255,255,.6);margin:2px 0;}
+  .date{font-size:16px;letter-spacing:.3em;color:#8a5a3c;}
+  .divider{display:flex;align-items:center;gap:10px;width:72%;margin:20px 0 16px;}
+  .divider .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#c9a15c,transparent);}
+  .divider .dot{width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);}
+  .q{font-size:19px;font-weight:600;color:#4f2e20;}
+  .qhi{font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;margin-bottom:6px;}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:12px;}
+  a.side{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;padding:18px 10px;border-radius:9px;border:1.5px solid #c9a15c;background:#fff;color:#6e3d22;transition:transform .2s ease,background .2s ease,box-shadow .2s ease,color .2s ease,border-color .2s ease;}
+  a.side:hover,a.side:active{transform:translateY(-2px);background:linear-gradient(135deg,#c4506f,#9e3350);color:#fff8f3;border-color:#9e3350;box-shadow:0 12px 26px rgba(158,51,80,.3);}
+  a.side .en{font-size:18px;font-weight:600;letter-spacing:.03em;}
+  a.side .hi{font-family:'Tiro Devanagari Hindi',serif;font-size:14px;}
+  .foot{margin-top:20px;font-size:15px;font-weight:600;color:#6b4636;line-height:1.4;}
+  .foothi{font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#8a6050;margin-top:2px;}
+  @media(max-width:360px){.btns{grid-template-columns:1fr;}}
 </style>
-</helmet>
-
-<div style="font-family:'Cormorant Garamond',Georgia,serif;color:#6b4636;overflow-x:clip;position:relative;">
-
-  <sc-if value="{{ showMusicBtn }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ toggleMute }}" title="Music on / off" style="position:fixed;bottom:18px;right:16px;z-index:70;width:46px;height:46px;border-radius:50%;background:rgba(255,250,246,.9);border:1px solid #c9a15c;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(150,80,90,.28);font-size:20px;line-height:1;user-select:none;">{{ musicIcon }}</div>
-  </sc-if>
-
-  <sc-if value="{{ showCoverNow }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ openCover }}" style="position:fixed;inset:0;z-index:60;cursor:pointer;">
-      <div style="position:absolute;top:0;bottom:0;left:0;width:50%;background:linear-gradient(160deg,#f3cfd2,#e7aab3);border-right:2px solid #d6b06e;transition:transform 1.3s cubic-bezier(.7,0,.2,1);transform:{{ leftX }};box-shadow:inset -30px 0 60px rgba(150,60,80,.15);"></div>
-      <div style="position:absolute;top:0;bottom:0;right:0;width:50%;background:linear-gradient(200deg,#f3cfd2,#e7aab3);border-left:2px solid #d6b06e;transition:transform 1.3s cubic-bezier(.7,0,.2,1);transform:{{ rightX }};box-shadow:inset 30px 0 60px rgba(150,60,80,.15);"></div>
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .6s ease,transform .8s ease;opacity:{{ sealOpacity }};transform:scale({{ sealScale }});padding:24px;text-align:center;">
-        <div style="font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:#7a3b4a;">You are invited</div>
-        <div style="width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f7e3b4,#d4af6a 55%,#a9803d);display:flex;align-items:center;justify-content:center;animation:glow 2.6s ease-in-out infinite;border:3px solid #f6e6c2;">
-          <div style="font-family:'Great Vibes',cursive;font-size:58px;color:#6e3a2a;line-height:1;padding-top:6px;">{{ seal }}</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div style="font-size:18px;letter-spacing:.24em;text-transform:uppercase;color:#6e2f40;font-weight:600;">Tap to open</div>
-          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:17px;color:#7a3b4a;">निमंत्रण खोलें</div>
-        </div>
+</head>
+<body>
+  <div class="bg"><video src="./assets/bg-portrait.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+  <div class="petals" id="petals"></div>
+  <div class="wrap">
+    <div class="card"><div class="inner">
+      <div class="seal"><span>S&amp;P</span></div>
+      <div class="invited">You are invited</div>
+      <div class="names">Shweta &amp; Pragy</div>
+      <div class="date">21 · 11 · 2026</div>
+      <div class="divider"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+      <div class="q">Which side are you joining from?</div>
+      <div class="qhi">आप किस पक्ष से आ रहे हैं?</div>
+      <div class="btns">
+        <a class="side" href="./bride"><span class="en">Bride's side</span><span class="hi">वधू पक्ष · श्वेता</span></a>
+        <a class="side" href="./groom"><span class="en">Groom's side</span><span class="hi">वर पक्ष · प्रज्ञ</span></a>
       </div>
-    </div>
-  </sc-if>
-
-  <!-- HERO -->
-  <section data-screen-label="01 Invitation" style="position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:72px 20px 96px;background:radial-gradient(ellipse at 20% 10%,#fbeeea 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,#f0cdd1 0%,transparent 55%),#f5e4e1;">
-    {{ heroTop }}
-    <div data-portrait-only="1" style="position:absolute;bottom:0;left:0;width:42%;max-width:340px;aspect-ratio:3/4;z-index:2;overflow:hidden;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);">
-      <video src="./assets/lotus-pond.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;"></video>
-    </div>
-    <div data-portrait-only="1" style="position:absolute;bottom:0;right:0;width:42%;max-width:340px;aspect-ratio:3/4;z-index:2;overflow:hidden;pointer-events:none;transform:scaleX(-1);-webkit-mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);">
-      <video src="./assets/lotus-pond.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;"></video>
-    </div>
-
-    <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:420px;padding:110px 34px 120px;text-align:center;">
-      <svg viewBox="0 0 300 1000" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 18px 40px rgba(150,80,90,.18));">
-        <path d="M0 850 V150 C0 120 20 110 40 108 C60 106 70 90 90 80 C120 66 140 40 150 0 C160 40 180 66 210 80 C230 90 240 106 260 108 C280 110 300 120 300 150 V850 C300 880 280 890 260 892 C240 894 230 910 210 920 C180 934 160 960 150 1000 C140 960 120 934 90 920 C70 910 60 894 40 892 C20 890 0 880 0 850 Z" fill="rgba(250,226,226,0.94)" stroke="#c9a15c" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-        <path d="M12 845 V156 C12 132 28 122 44 120 C64 117 76 102 96 92 C124 78 142 54 150 22 C158 54 176 78 204 92 C224 102 236 117 256 120 C272 122 288 132 288 156 V845 C288 868 272 878 256 880 C236 883 224 898 204 908 C176 922 158 946 150 978 C142 946 124 922 96 908 C76 898 64 883 44 880 C28 878 12 868 12 845 Z" fill="none" stroke="#dcbd84" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-      </svg>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <div style="font-size:20px;font-weight:600;color:#4f2e20;">Join us to celebrate our</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">हमारे विवाह समारोह में आप सादर आमंत्रित हैं</div>
-        <div style="font-family:'Great Vibes',cursive;font-size:clamp(48px,14vw,66px);line-height:1.12;margin-top:10px;padding:0 6px;color:#9a6a22;text-shadow:0 1px 0 rgba(255,255,255,.6);">Wedding Ceremony</div>
-
-        <div style="display:flex;align-items:center;gap:10px;width:78%;margin:14px 0;">
-          <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c9a15c);"></div>
-          <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
-          <div style="flex:1;height:1px;background:linear-gradient(90deg,#c9a15c,transparent);"></div>
-        </div>
-
-        <div style="font-size:clamp(26px,7.5vw,32px);font-weight:700;letter-spacing:.08em;color:#6e3d22;">{{ namesEn }}</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:23px;color:#6e3d22;">{{ namesHi }}</div>
-
-        <div style="display:flex;align-items:center;gap:10px;width:78%;margin:14px 0 10px;">
-          <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c9a15c);"></div>
-          <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
-          <div style="flex:1;height:1px;background:linear-gradient(90deg,#c9a15c,transparent);"></div>
-        </div>
-
-        <div style="font-size:18px;font-weight:600;letter-spacing:.24em;color:#6e3d22;">NOVEMBER</div>
-        <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;width:100%;">
-          <div style="text-align:right;font-size:16px;font-weight:600;color:#5e3a2a;letter-spacing:.16em;padding:6px 0;border-top:1px solid #b88f4a;border-bottom:1px solid #b88f4a;">SATURDAY</div>
-          <div style="font-size:64px;font-weight:600;line-height:1;color:#6e3d22;">21</div>
-          <div style="text-align:left;font-size:16px;font-weight:600;color:#5e3a2a;letter-spacing:.16em;padding:6px 0;border-top:1px solid #b88f4a;border-bottom:1px solid #b88f4a;">2026</div>
-        </div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:17px;color:#5e3a2a;margin-top:6px;">शनिवार, २१ नवंबर २०२६</div>
-
-        <div style="margin-top:18px;font-size:19px;font-weight:600;line-height:1.4;color:#4f2e20;">Imperial Garden &amp; Resorts<br>Ghaziabad, Uttar Pradesh</div>
-      </div>
-    </div>
-
-    <div style="position:absolute;bottom:22px;left:50%;margin-left:-12px;z-index:3;width:24px;height:38px;border:1.5px solid #b9915a;border-radius:14px;display:flex;justify-content:center;padding-top:7px;">
-      <div style="width:3px;height:8px;border-radius:2px;background:#b9915a;animation:pulse 1.8s ease-in-out infinite;"></div>
-    </div>
-  </section>
-
-  <!-- SAVE THE DATE -->
-  <section data-screen-label="02 Save the Date" style="position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:80px 20px;background:radial-gradient(ellipse at 30% 40%,#fffaf6,#f6ece6 70%);overflow:hidden;">
-    <div data-portrait-only="1" style="position:absolute;top:0;bottom:0;right:0;width:22%;max-width:220px;background:linear-gradient(180deg,#efc3c6,#e3a4ad);"></div>
-    {{ stdLotus }}
-    <div data-reveal="1" style="position:relative;z-index:2;width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
-      <div style="font-family:'Great Vibes',cursive;font-size:clamp(58px,17vw,92px);line-height:1;color:#b13f5d;">Save the Date</div>
-      <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:18px;color:#a3506a;margin-top:6px;">शुभ तिथि</div>
-      <div style="display:flex;align-items:center;gap:10px;width:64%;margin:18px 0 10px;">
-        <div style="flex:1;height:1px;background:#c25a75;"></div>
-        <div style="width:8px;height:8px;background:#b13f5d;transform:rotate(45deg);"></div>
-        <div style="flex:1;height:1px;background:#c25a75;"></div>
-      </div>
-      <div style="font-size:22px;letter-spacing:.2em;font-weight:600;color:#a33a55;">NOVEMBER</div>
-      <div style="font-size:clamp(84px,24vw,120px);font-weight:600;line-height:.95;color:#b13f5d;">21</div>
-      <div style="font-size:24px;letter-spacing:.2em;font-weight:600;color:#a33a55;">2026</div>
-      <div style="display:flex;align-items:center;gap:10px;width:64%;margin:14px 0 28px;">
-        <div style="flex:1;height:1px;background:#c25a75;"></div>
-        <div style="width:8px;height:8px;background:#b13f5d;transform:rotate(45deg);"></div>
-        <div style="flex:1;height:1px;background:#c25a75;"></div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:400px;">
-        <sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
-          <div style="background:rgba(255,255,255,.85);border:1px solid #dcbd84;border-radius:6px;padding:14px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;">
-            <div style="font-size:34px;font-weight:600;line-height:1;color:#8a3a4e;font-variant-numeric:tabular-nums;">{{ c.value }}</div>
-            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7a5040;">{{ c.en }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#8a6050;">{{ c.hi }}</div>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <!-- VENUE -->
-  <section data-screen-label="03 Venue" style="position:relative;display:flex;justify-content:center;padding:90px 20px 100px;background:radial-gradient(ellipse at 80% 10%,#fbeeea 0%,transparent 50%),radial-gradient(ellipse at 10% 90%,#f0cdd1 0%,transparent 55%),#f5e4e1;">
-    {{ venueTop }}
-    <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:440px;padding:120px 30px 130px;text-align:center;">
-      <svg viewBox="0 0 300 1000" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 18px 40px rgba(60,80,40,.25));">
-        <path d="M0 850 V150 C0 120 20 110 40 108 C60 106 70 90 90 80 C120 66 140 40 150 0 C160 40 180 66 210 80 C230 90 240 106 260 108 C280 110 300 120 300 150 V850 C300 880 280 890 260 892 C240 894 230 910 210 920 C180 934 160 960 150 1000 C140 960 120 934 90 920 C70 910 60 894 40 892 C20 890 0 880 0 850 Z" fill="#7d9558" stroke="#d9bc7c" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-        <path d="M12 845 V156 C12 132 28 122 44 120 C64 117 76 102 96 92 C124 78 142 54 150 22 C158 54 176 78 204 92 C224 102 236 117 256 120 C272 122 288 132 288 156 V845 C288 868 272 878 256 880 C236 883 224 898 204 908 C176 922 158 946 150 978 C142 946 124 922 96 908 C76 898 64 883 44 880 C28 878 12 868 12 845 Z" fill="none" stroke="#e6cf9a" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-      </svg>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;color:#fbf3e2;">
-        <div style="font-size:15px;letter-spacing:.3em;text-transform:uppercase;">The Venue</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#f3e6c6;">विवाह स्थल</div>
-        <div data-shimmer="1" style="font-family:'Great Vibes',cursive;font-size:clamp(38px,11vw,50px);line-height:1.15;margin:10px 0 4px;padding:0 6px;background:linear-gradient(100deg,#e2c27d 0%,#fff2c9 25%,#d9b56c 50%,#fff2c9 75%,#e2c27d 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;">Imperial Garden &amp; Resorts</div>
-        <div style="display:flex;align-items:center;gap:10px;width:70%;margin:6px 0 12px;">
-          <div style="flex:1;height:1px;background:#e6cf9a;"></div>
-          <div style="width:7px;height:7px;background:#e6cf9a;transform:rotate(45deg);"></div>
-          <div style="flex:1;height:1px;background:#e6cf9a;"></div>
-        </div>
-        <div style="font-size:17px;line-height:1.5;text-wrap:pretty;">Hapur Rd, Ansal Garden Enclave, Durgapuram, Govindpuram, Ghaziabad, Uttar Pradesh 201013</div>
-        <div style="width:100%;aspect-ratio:4/3;margin-top:20px;border-radius:8px;overflow:hidden;border:2px solid #e6cf9a;background:#6c8449;">
-          <iframe title="Venue map" src="https://maps.google.com/maps?q=Imperial%20Garden%20%26%20Resorts%2C%20Hapur%20Rd%2C%20Govindpuram%2C%20Ghaziabad&amp;z=15&amp;output=embed" style="width:100%;height:100%;border:0;display:block;" loading="lazy"></iframe>
-        </div>
-        <a href="https://maps.app.goo.gl/y9znZKRwYAFnMBjh9" target="_blank" rel="noopener" style="margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 26px;border-radius:999px;background:linear-gradient(135deg,#f3dda2,#c9a15c);color:#3f4a26;text-decoration:none;font-weight:600;font-size:16px;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 6px 18px rgba(40,50,20,.3);" style-hover="transform:translateY(-2px);box-shadow:0 10px 24px rgba(40,50,20,.35);color:#2c3418;">
-          <span>Get Directions</span>
-          <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;letter-spacing:0;text-transform:none;font-weight:400;">रास्ता देखें</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- RSVP -->
-  <section data-screen-label="04 RSVP" style="position:relative;display:flex;justify-content:center;padding:80px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
-    <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:440px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
-      <div style="border:1px solid #e3c991;border-radius:6px;padding:40px 26px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
-        <div style="font-family:'Great Vibes',cursive;font-size:clamp(52px,15vw,68px);line-height:1;color:#b13f5d;">RSVP</div>
-        <div style="font-size:18px;font-weight:600;color:#4f2e20;">Kindly let us know if you can join</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">कृपया अपनी उपस्थिति की पुष्टि करें</div>
-        <div style="display:flex;align-items:center;gap:10px;width:60%;margin:14px 0 18px;">
-          <div style="flex:1;height:1px;background:#c9a15c;"></div>
-          <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
-          <div style="flex:1;height:1px;background:#c9a15c;"></div>
-        </div>
-
-        <sc-if value="{{ rsvpOpen }}" hint-placeholder-val="{{ true }}">
-          <form onSubmit="{{ submitRsvp }}" style="width:100%;display:flex;flex-direction:column;gap:16px;text-align:left;">
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Name · नाम</span>
-              <input value="{{ rName }}" onChange="{{ setName }}" required="{{ true }}" placeholder="Your full name" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
-            </label>
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Phone · फ़ोन</span>
-              <input type="tel" value="{{ rPhone }}" onChange="{{ setPhone }}" placeholder="+91" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
-            </label>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Will you attend? · क्या आप आएंगे?</span>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <sc-for list="{{ attendOpts }}" as="o" hint-placeholder-count="2">
-                  <button type="button" onClick="{{ o.pick }}" style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;padding:12px 8px;border-radius:6px;cursor:pointer;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s;">
-                    <span>{{ o.en }}</span>
-                    <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;font-weight:400;">{{ o.hi }}</span>
-                  </button>
-                </sc-for>
-              </div>
-            </div>
-            <sc-if value="{{ attending }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;flex-direction:column;gap:8px;">
-                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Number of guests · मेहमानों की संख्या</span>
-                <div style="display:flex;align-items:center;gap:14px;">
-                  <button type="button" onClick="{{ decGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">−</button>
-                  <div style="font-size:30px;font-weight:600;color:#4f2e20;min-width:32px;text-align:center;">{{ rGuests }}</div>
-                  <button type="button" onClick="{{ incGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">+</button>
-                </div>
-              </div>
-            </sc-if>
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Wishes for the couple · शुभकामनाएँ</span>
-              <textarea value="{{ rMsg }}" onChange="{{ setMsg }}" rows="3" placeholder="Optional" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;resize:vertical;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);"></textarea>
-            </label>
-            <button type="submit" style="margin-top:6px;padding:14px 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#c4506f,#9e3350);color:#fff8f3;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 20px rgba(158,51,80,.3);display:flex;flex-direction:column;align-items:center;gap:2px;" style-hover="transform:translateY(-2px);box-shadow:0 12px 26px rgba(158,51,80,.38);">
-              <span>Send RSVP</span>
-              <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;letter-spacing:0;text-transform:none;font-weight:400;">भेजें</span>
-            </button>
-          </form>
-        </sc-if>
-
-        <sc-if value="{{ rsvpDone }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:10px 0;">
-            <div style="font-family:'Great Vibes',cursive;font-size:48px;line-height:1.1;color:#9a6a22;">Thank you</div>
-            <div style="font-size:19px;font-weight:600;color:#4f2e20;text-wrap:pretty;">{{ thanksEn }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">{{ thanksHi }}</div>
-            <button type="button" onClick="{{ resetRsvp }}" style="margin-top:10px;background:none;border:0;font-family:'Cormorant Garamond',serif;font-size:16px;color:#a8455f;text-decoration:underline;cursor:pointer;">Edit response</button>
-          </div>
-        </sc-if>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLOSING -->
-  <section data-screen-label="05 Closing" style="position:relative;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:90px 20px 0;background:linear-gradient(180deg,#f5e4e1,#f2d6d8);overflow:hidden;">
-    <div data-reveal="1" style="position:relative;z-index:2;max-width:480px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;">
-      <div style="font-size:17px;letter-spacing:.24em;text-transform:uppercase;color:#8a5a3c;">With love &amp; blessings</div>
-      <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:17px;color:#8a6050;text-wrap:pretty;">आपकी उपस्थिति हमारे लिए आशीर्वाद होगी</div>
-      <div style="font-family:'Great Vibes',cursive;font-size:clamp(54px,16vw,80px);line-height:1.1;color:#b13f5d;margin-top:10px;">{{ namesScript }}</div>
-      <div style="font-size:18px;letter-spacing:.3em;color:#8a5a3c;">21 · 11 · 2026</div>
-    </div>
-    <div data-portrait-only="1" style="position:absolute;bottom:0;left:0;width:42%;max-width:340px;aspect-ratio:3/4;z-index:2;overflow:hidden;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);">
-      <video src="./assets/lotus-pond.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;"></video>
-    </div>
-    <div data-portrait-only="1" style="position:absolute;bottom:0;right:0;width:42%;max-width:340px;aspect-ratio:3/4;z-index:2;overflow:hidden;pointer-events:none;transform:scaleX(-1);-webkit-mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse 100% 100% at 0% 100%,#000 45%,transparent 75%);">
-      <video src="./assets/lotus-pond.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;"></video>
-    </div>
-  </section>
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;musicUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./assets/music.mp3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
-class Component extends DCLogic {
-  state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.whichSide(), rsvpDone: false, muted: false };
-  target = new Date('2026-11-21T00:00:00+05:30').getTime();
-
-  // Which family's version is this page? Groom's version lives at /groom(.html);
-  // everything else is the bride's version. (?for=groom also forces it.)
-  whichSide() {
-    try {
-      const path = (location.pathname || '').toLowerCase();
-      const q = (new URLSearchParams(location.search).get('for') || '').toLowerCase();
-      if (/groom/.test(path) || /^(g|groom|p|pragy)/.test(q)) return 'groom';
-    } catch (e) {}
-    return 'bride';
-  }
-  coupleNames() {
-    return this.whichSide() === 'groom'
-      ? { namesEn: 'PRAGY & SHWETA', namesHi: 'प्रज्ञ & श्वेता', namesScript: 'Pragy & Shweta', seal: 'P&S', title: 'Pragy & Shweta · 21.11.2026', side: 'groom', sideLabel: 'Groom (Pragy)' }
-      : { namesEn: 'SHWETA & PRAGY', namesHi: 'श्वेता & प्रज्ञ', namesScript: 'Shweta & Pragy', seal: 'S&P', title: 'Shweta & Pragy · 21.11.2026', side: 'bride', sideLabel: 'Bride (Shweta)' };
-  }
-
-  isLandscape() { return window.innerWidth > window.innerHeight && window.innerWidth >= 900; }
-  applyOrientation() {
-    const land = true;
-    document.querySelectorAll('section').forEach(s => {
-      if (s.dataset.bg === undefined) s.dataset.bg = s.style.background;
-      s.style.background = land ? 'transparent' : s.dataset.bg;
-    });
-    document.querySelectorAll('[data-portrait-only]').forEach(el => { el.style.display = land ? 'none' : ''; });
-    this.playVideos && this.playVideos();
-  }
-  componentDidMount() {
-    this.land = this.isLandscape();
-    try { document.title = this.coupleNames().title; } catch (e) {}
-    // Mount the fixed background + petals directly on <body> so no ancestor can
-    // turn position:fixed into a scrolling (absolute-like) layer on mobile.
-    const mkHost = (z, bg) => {
-      const d = document.createElement('div');
-      d.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;overflow:hidden;pointer-events:none;z-index:' + z + ';transform:translateZ(0);-webkit-transform:translateZ(0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;' + (bg ? 'background:' + bg + ';' : '');
-      document.body.appendChild(d);
-      return d;
-    };
-    this._bgHost = mkHost(-1, '#f5e4e1');
-    this._petalHost = mkHost(40, '');
-    this._bgVideo = document.createElement('video');
-    this._bgVideo.muted = true; this._bgVideo.loop = true; this._bgVideo.autoplay = true; this._bgVideo.preload = 'auto'; this._bgVideo.playsInline = true;
-    this._bgVideo.setAttribute('muted', ''); this._bgVideo.setAttribute('playsinline', '');
-    this._bgVideo.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-    this._bgHost.appendChild(this._bgVideo);
-    this._petalRoot = window.ReactDOM.createRoot(this._petalHost);
-    this.petalCount = () => {
-      if (!(this.props.petals ?? true)) return 0;
-      const nMax = this.props.petalCount ?? 28;
-      const small = typeof window !== 'undefined' && window.innerWidth < 600;
-      return Math.max(0, Math.min(80, small ? Math.min(nMax, 12) : nMax));
-    };
-    this.refreshLayers = () => {
-      const want = this.land ? './assets/bg-landscape.mp4' : './assets/bg-portrait.mp4';
-      if (this._bgVideo && this._bgVideo.getAttribute('src') !== want) { this._bgVideo.setAttribute('src', want); this._bgVideo.load(); }
-      if (this._bgVideo) { this._bgVideo.muted = true; this._bgVideo.play().catch(() => {}); }
-      if (this._petalRoot) this._petalRoot.render(React.createElement(React.Fragment, null, this.getPetals(this.petalCount())));
-    };
-    this.refreshLayers();
-    const mu = String(this.props.musicUrl || '').trim();
-    if (mu) {
-      this.bgm = new Audio(mu);
-      this.bgm.loop = true; this.bgm.volume = 0.2; this.bgm.preload = 'auto';
-      // Only surface the music toggle once a real, playable track has loaded.
-      this.bgm.addEventListener('canplay', () => { if (!this._musicOk) { this._musicOk = true; this.forceUpdate(); } });
-    }
-    this.startMusic = () => { if (this._bgmOn || this.state.muted || !this.bgm || !this._musicOk) return; this.bgm.play().then(() => { this._bgmOn = true; }).catch(() => {}); };
-    this.onResize = () => {
-      const l = this.isLandscape();
-      if (l !== this.land) { this.land = l; this.forceUpdate(); this.refreshLayers && this.refreshLayers(); setTimeout(() => this.applyOrientation(), 50); }
-    };
-    window.addEventListener('resize', this.onResize);
-    this.kick = () => { this.playVideos && this.playVideos(); this.startMusic && this.startMusic(); };
-    ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.addEventListener(ev, this.kick, { passive: true }));
-    this.forceUpdate();
-    setTimeout(() => this.applyOrientation(), 50);
-    setTimeout(() => this.applyOrientation(), 600);
-    this.timer = setInterval(() => this.setState({ now: Date.now() }), 1000);
-    const els = document.querySelectorAll('[data-reveal]');
-    els.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(40px)'; el.style.transition = 'opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1)'; });
-    this.io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this.io.unobserve(e.target); }
-    }), { threshold: 0.15 });
-    els.forEach(el => this.io.observe(el));
-    this.playVideos = () => document.querySelectorAll('video').forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; v.play().catch(() => {}); });
-    this.playVideos();
-    document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
-  }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
-  componentDidUpdate() { try { const t = this.coupleNames().title; if (document.title !== t) document.title = t; } catch (e) {} }
-
-  getPetals(n) {
-    if (this._petals && this._petals.length === n) return this._petals;
-    const cols = [['#fde2e7', '#f29bb0'], ['#fbd0da', '#e9879f'], ['#fff1f3', '#f5b5c4']];
-    this._petals = Array.from({ length: n }, (_, i) => {
-      const s = 10 + Math.random() * 14, c = cols[i % 3];
-      return React.createElement('div', {
-        key: i,
-        style: { position: 'absolute', top: 0, left: Math.random() * 100 + '%', animation: `fall ${9 + Math.random() * 10}s linear ${-Math.random() * 18}s infinite`, '--dx': (Math.random() * 160 - 80) + 'px', '--rot': (Math.random() > .5 ? 1 : -1) * (360 + Math.random() * 360) + 'deg' }
-      }, React.createElement('div', {
-        style: { width: s, height: s * .8, borderRadius: '150% 0 150% 0', background: `linear-gradient(135deg,${c[0]},${c[1]})`, opacity: .85, boxShadow: '0 2px 4px rgba(180,80,100,.15)', animation: `sway ${3 + Math.random() * 3}s ease-in-out infinite` }
-      }));
-    });
-    return this._petals;
-  }
-
-  buildDecor() {
-    if (this._decor) return this._decor;
-    const e = React.createElement;
-    let k = 0;
-    const abs = (st, kids) => e('div', { key: k++, style: Object.assign({ position: 'absolute' }, st) }, kids);
-    const lotus = (left, bottom, s, opt = {}) => {
-      const white = opt.white;
-      const tipA = white ? '#fffaf3' : '#fff2f5', midA = white ? '#fbeee0' : '#f9b9c9', tipB = white ? '#f3dcc8' : '#e66f94';
-      const petal = (a, w, h, bg, z) => e('div', { key: k++, style: { position: 'absolute', left: '50%', bottom: 0, width: w, height: h, marginLeft: -w / 2, transformOrigin: '50% 100%', transform: `rotate(${a}deg)`, borderRadius: '50% 50% 50% 50% / 92% 92% 18% 18%', background: bg, boxShadow: 'inset 0 -6px 12px rgba(255,255,255,.5), 0 2px 6px rgba(160,60,90,.12)', zIndex: z } });
-      const back = [-72, -48, -24, 0, 24, 48, 72].map(a => petal(a, s * .26, s * .6, `linear-gradient(to top,${tipA},${midA} 65%,${tipB})`, 1));
-      const front = [-38, -13, 13, 38].map(a => petal(a, s * .3, s * .5, `linear-gradient(to top,#fff,${midA} 60%,${tipB})`, 2));
-      const center = e('div', { key: k++, style: { position: 'absolute', left: '50%', bottom: s * .02, width: s * .26, height: s * .12, marginLeft: -s * .13, borderRadius: '50%', background: 'radial-gradient(circle,#f8dc6a,#e2b23c)', zIndex: 3 } });
-      const stem = opt.stem ? e('div', { key: k++, style: { position: 'absolute', left: '50%', top: '100%', width: 3, height: opt.stem, marginLeft: -1.5, background: 'linear-gradient(#6f9a52,#3f6b3a)', borderRadius: 2 } }) : null;
-      return abs({ left, bottom, width: s, height: s * .7, marginLeft: -s / 2, zIndex: opt.z || 2 },
-        e('div', { style: { position: 'relative', width: '100%', height: '100%', transformOrigin: '50% 100%', animation: `bob ${5 + (k % 4)}s ease-in-out ${-(k % 5)}s infinite` } }, [...back, ...front, center, stem]));
-    };
-    const bud = (left, bottom, s, stem) => abs({ left, bottom, width: s * .36, height: s * .6, marginLeft: -s * .18, zIndex: 2 }, [
-      e('div', { key: 1, style: { width: '100%', height: '100%', borderRadius: '50% 50% 50% 50% / 95% 95% 25% 25%', background: 'linear-gradient(to top,#f9d2dc,#ec7c9d 75%,#d9537c)', animation: 'bob 6s ease-in-out infinite' } }),
-      e('div', { key: 2, style: { position: 'absolute', left: '50%', top: '100%', width: 3, height: stem, marginLeft: -1.5, background: 'linear-gradient(#6f9a52,#3f6b3a)' } })]);
-    const pad = (left, bottom, w, rot = 0) => abs({ left, bottom, width: w, height: w * .42, marginLeft: -w / 2, borderRadius: '50%', transform: `rotate(${rot}deg)`, background: 'radial-gradient(ellipse at 45% 40%,#86ad62,#4d7a3e 60%,#365f30)', boxShadow: 'inset 0 4px 10px rgba(255,255,255,.18), 0 6px 14px rgba(40,60,30,.2)', zIndex: 1 });
-    const blossom = (left, top, p, rot = 0, deep) => abs({ left, top, width: p * 2, height: p * 2, marginLeft: -p, marginTop: -p, transform: `rotate(${rot}deg)`, zIndex: 2 },
-      [0, 1, 2, 3, 4].map(i => e('div', { key: i, style: { position: 'absolute', left: '50%', top: '50%', width: p * .78, height: p * .95, marginLeft: -p * .39, marginTop: -p * .95, transformOrigin: '50% 100%', transform: `rotate(${i * 72}deg)`, borderRadius: '50% 50% 45% 45% / 60% 60% 40% 40%', background: deep ? 'radial-gradient(circle at 50% 95%,#e98aa3,#f7c3cf 60%,#fde8ed)' : 'radial-gradient(circle at 50% 95%,#f3a9bb,#fbd9e1 55%,#fff5f7)' } }))
-        .concat(e('div', { key: 9, style: { position: 'absolute', left: '50%', top: '50%', width: p * .34, height: p * .34, marginLeft: -p * .17, marginTop: -p * .17, borderRadius: '50%', background: 'radial-gradient(circle,#f6d36a,#d9909f)' } })));
-    const branch = (left, top, len, rot) => abs({ left, top, width: len, height: 3, transformOrigin: '0 50%', transform: `rotate(${rot}deg)`, background: 'linear-gradient(90deg,#7a5640,#a8846a)', borderRadius: 3, zIndex: 1 });
-    const leaf = (left, top, s, rot) => abs({ left, top, width: s, height: s * .45, transform: `rotate(${rot}deg)`, borderRadius: '0 100% 0 100%', background: 'linear-gradient(135deg,#9bb878,#5d8a48)', zIndex: 1 });
-    const wrap = (st, kids) => e('div', { 'data-portrait-only': '1', style: Object.assign({ position: 'absolute', pointerEvents: 'none' }, st) }, kids);
-    const corner = (flip) => wrap({ top: 0, [flip ? 'right' : 'left']: 0, width: '55%', maxWidth: 420, height: 220, transform: flip ? 'scaleX(-1)' : 'none', zIndex: 0 }, [
-      branch('-5%', '18%', 330, 14), branch('30%', '30%', 140, -22), branch('8%', '22%', 120, 48),
-      leaf('42%', '22%', 30, -30), leaf('20%', '36%', 26, 40), leaf('66%', '34%', 24, 10),
-      blossom('10%', '20%', 22, 10), blossom('22%', '30%', 18, 40, true), blossom('36%', '28%', 24, 0), blossom('52%', '17%', 17, 30, true),
-      blossom('48%', '40%', 20, 15), blossom('66%', '42%', 15, 50), blossom('78%', '46%', 12, 20, true), blossom('16%', '50%', 16, 60),
-      blossom('4%', '8%', 14, 30, true), blossom('28%', '12%', 12, 0)]);
-    this._decor = {
-      heroTop: e('div', null, [corner(false), corner(true)].map((c, i) => e('div', { key: i }, c))),
-      heroBottom: wrap({ left: 0, right: 0, bottom: 0, height: 220, zIndex: 2 }, [
-        pad('6%', -20, 180, -6), pad('92%', -24, 200, 8), pad('70%', -40, 150, 0),
-        bud('22%', 70, 70, 60), lotus('8%', 40, 150), lotus('24%', 6, 110, { white: true, z: 3 }),
-        lotus('90%', 50, 160), lotus('75%', 8, 120, { z: 3 }), bud('82%', 150, 60, 80)]),
-      stdLotus: wrap({ right: 0, bottom: 0, width: '50%', maxWidth: 440, height: '70%', zIndex: 1 }, [
-        lotus('62%', '58%', 150, { stem: 400 }), lotus('30%', '36%', 120, { stem: 300 }), bud('85%', '74%', 70, 520),
-        lotus('82%', '22%', 140, { stem: 200, white: true }), bud('48%', '80%', 55, 560),
-        pad('40%', -30, 220, -4), pad('92%', -20, 180, 6), lotus('60%', 4, 130, { z: 3 })]),
-      venueTop: wrap({ top: 0, left: 0, right: 0, height: 220, zIndex: 0 }, [corner(false)]),
-      closingPond: wrap({ left: 0, right: 0, bottom: 0, height: 260, zIndex: 1 }, [
-        pad('10%', -30, 220, -5), pad('50%', -50, 260, 2), pad('90%', -30, 220, 6), pad('30%', -10, 140, 0), pad('72%', -16, 150, 0),
-        bud('38%', 110, 60, 80), bud('64%', 120, 54, 90),
-        lotus('14%', 30, 150), lotus('32%', 4, 120, { white: true, z: 3 }), lotus('50%', 34, 170), lotus('70%', 6, 120, { z: 3 }), lotus('88%', 30, 150, { white: true })])
-    };
-    return this._decor;
-  }
-
-  rsvpVals() {
-    const s = this.state, yes = s.rAttend === 'yes';
-    const opt = (key, en, hi) => {
-      const on = s.rAttend === key;
-      return { en, hi, pick: () => this.setState({ rAttend: key }), bg: on ? '#b13f5d' : '#fff', color: on ? '#fff8f3' : '#6e3d22', border: on ? '#b13f5d' : '#d9bd85' };
-    };
-    const names = this.coupleNames();
-    return {
-      rsvpOpen: !s.rsvpDone, rsvpDone: s.rsvpDone, attending: yes,
-      rName: s.rName, rPhone: s.rPhone, rGuests: s.rGuests, rMsg: s.rMsg,
-      setName: e => this.setState({ rName: e.target.value }),
-      setPhone: e => this.setState({ rPhone: e.target.value }),
-      setMsg: e => this.setState({ rMsg: e.target.value }),
-      incGuests: () => this.setState(p => ({ rGuests: Math.min(10, p.rGuests + 1) })),
-      decGuests: () => this.setState(p => ({ rGuests: Math.max(1, p.rGuests - 1) })),
-      attendOpts: [opt('yes', 'Joyfully accept', 'ज़रूर आएंगे'), opt('no', 'Regretfully decline', 'नहीं आ पाएंगे')],
-      thanksEn: yes ? `We can't wait to celebrate with you, ${s.rName.split(' ')[0] || 'dear guest'}!` : 'You will be missed. Thank you for your blessings.',
-      thanksHi: yes ? 'आपसे मिलने का इंतज़ार रहेगा' : 'आपकी शुभकामनाओं के लिए धन्यवाद',
-      submitRsvp: e => {
-        e.preventDefault();
-        const sideLabel = names.sideLabel;
-        const payload = {
-          name: s.rName, phone: s.rPhone, side: sideLabel,
-          attending: yes ? 'Yes' : 'No', guests: yes ? String(s.rGuests) : '0',
-          wishes: s.rMsg, page: location.href
-        };
-        const url = String(this.props.sheetUrl || '').trim();
-        if (url) {
-          fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(payload).toString() }).catch(() => {});
-        }
-        const num = String(this.props.whatsappNumber || '').replace(/\D/g, '');
-        if (num) {
-          const txt = `RSVP – ${names.namesScript} (21 Nov 2026)\nName: ${s.rName}\nPhone: ${s.rPhone || '-'}\nSide: ${sideLabel}\nAttending: ${yes ? 'Yes' : 'No'}${yes ? `\nGuests: ${s.rGuests}` : ''}${s.rMsg ? `\nWishes: ${s.rMsg}` : ''}`;
-          window.open(`https://wa.me/${num}?text=${encodeURIComponent(txt)}`, '_blank');
-        }
-        this.setState({ rsvpDone: true });
-      },
-      resetRsvp: () => this.setState({ rsvpDone: false })
-    };
-  }
-
-  renderVals() {
-    const showCover = this.props.showCover ?? true;
-    const { phase } = this.state;
-    const d = Math.max(0, this.target - this.state.now);
-    const pad = v => String(v).padStart(2, '0');
-    const opening = phase === 'opening';
-    return {
-      ...this.buildDecor(),
-      ...this.rsvpVals(),
-      ...this.coupleNames(),
-      landscape: !!this.land,
-      portrait: !this.land,
-      showCoverNow: showCover && phase !== 'open',
-      leftX: opening ? 'translateX(-102%)' : 'translateX(0)',
-      rightX: opening ? 'translateX(102%)' : 'translateX(0)',
-      sealOpacity: opening ? 0 : 1,
-      sealScale: opening ? 1.3 : 1,
-      openCover: () => {
-        if (phase !== 'closed') return;
-        this.setState({ phase: 'opening' });
-        this.playVideos && this.playVideos();
-        this.startMusic && this.startMusic();
-        this.t = setTimeout(() => this.setState({ phase: 'open' }), 1400);
-      },
-      muted: this.state.muted,
-      musicIcon: this.state.muted ? '🔇' : '🔊',
-      showMusicBtn: !!this._musicOk && ((phase !== 'closed') || (showCover === false)),
-      toggleMute: () => {
-        const m = !this.state.muted;
-        this.setState({ muted: m });
-        if (this.bgm) { if (m) { this.bgm.pause(); } else { this._bgmOn = true; this.bgm.play().catch(() => {}); } }
-      },
-      countdown: [
-        { value: Math.floor(d / 864e5), en: 'Days', hi: 'दिन' },
-        { value: pad(Math.floor(d / 36e5) % 24), en: 'Hours', hi: 'घंटे' },
-        { value: pad(Math.floor(d / 6e4) % 60), en: 'Mins', hi: 'मिनट' },
-        { value: pad(Math.floor(d / 1e3) % 60), en: 'Secs', hi: 'सेकंड' }
-      ]
-    };
-  }
-}
-</script>
+      <div class="foot">Imperial Garden &amp; Resorts, Ghaziabad<div class="foothi">शनिवार, २१ नवंबर २०२६</div></div>
+    </div></div>
+  </div>
+  <script>
+    // Light falling-petal layer (fewer on small screens).
+    (function(){
+      var host=document.getElementById('petals');
+      var n=window.innerWidth<600?10:18, cols=[['#fde2e7','#f29bb0'],['#fbd0da','#e9879f'],['#fff1f3','#f5b5c4']];
+      for(var i=0;i<n;i++){
+        var p=document.createElement('div');p.className='petal';
+        var s=10+Math.random()*12,c=cols[i%3];
+        p.style.width=s+'px';p.style.height=(s*0.8)+'px';
+        p.style.left=(Math.random()*100)+'%';
+        p.style.background='linear-gradient(135deg,'+c[0]+','+c[1]+')';
+        p.style.setProperty('--dx',(Math.random()*140-70)+'px');
+        p.style.setProperty('--rot',((Math.random()>0.5?1:-1)*(360+Math.random()*360))+'deg');
+        p.style.animation='fall '+(9+Math.random()*9)+'s linear '+(-Math.random()*16)+'s infinite';
+        host.appendChild(p);
+      }
+      // Belt-and-suspenders: keep the bg video playing muted.
+      var v=document.querySelector('.bg video'); if(v){v.muted=true;v.play&&v.play().catch(function(){});}
+    })();
+  </script>
 </body>
 </html>
