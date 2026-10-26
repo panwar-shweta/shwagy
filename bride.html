@@ -229,6 +229,33 @@ a:hover{color:#7d2c42;}
     </div>
   </section>
 
+  <!-- FAMILY (bride version only) -->
+  <sc-if value="{{ showFamily }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="05 Family" style="position:relative;display:flex;justify-content:center;padding:84px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
+      <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:470px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
+        <div style="border:1px solid #e3c991;border-radius:6px;padding:38px 26px 32px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
+          <div style="font-family:'Great Vibes',cursive;font-size:clamp(46px,13vw,62px);line-height:1;color:#b13f5d;">With Love</div>
+          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;color:#a3506a;">सप्रेम निमंत्रण</div>
+          <div style="margin-top:12px;font-size:17px;font-weight:600;color:#4f2e20;text-wrap:pretty;">{{ parentsEn }}</div>
+          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;text-wrap:pretty;">{{ parentsHi }}</div>
+          <div style="display:flex;align-items:center;gap:10px;width:62%;margin:18px 0 6px;">
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+            <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:15px;width:100%;margin-top:8px;">
+            <sc-for list="{{ familyRows }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9a6a22;font-weight:600;">{{ r.role }} <span style="font-family:'Tiro Devanagari Hindi',serif;font-weight:400;letter-spacing:0;text-transform:none;color:#8a6050;">· {{ r.roleHi }}</span></div>
+                <div style="font-size:17px;color:#4f2e20;line-height:1.5;text-wrap:pretty;">{{ r.names }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
   <!-- CLOSING -->
   <section data-screen-label="05 Closing" style="position:relative;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:90px 20px 0;background:linear-gradient(180deg,#f5e4e1,#f2d6d8);overflow:hidden;">
     <div data-reveal="1" style="position:relative;z-index:2;max-width:480px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;">
@@ -265,6 +292,21 @@ class Component extends DCLogic {
     return this.whichSide() === 'groom'
       ? { namesEn: 'PRAGY & SHWETA', namesHi: 'प्रज्ञ & श्वेता', namesScript: 'Pragy & Shweta', seal: 'P&S', title: 'Pragy & Shweta · 21.11.2026', side: 'groom', sideLabel: 'Groom (Pragy)' }
       : { namesEn: 'SHWETA & PRAGY', namesHi: 'श्वेता & प्रज्ञ', namesScript: 'Shweta & Pragy', seal: 'S&P', title: 'Shweta & Pragy · 21.11.2026', side: 'bride', sideLabel: 'Bride (Shweta)' };
+  }
+  // Bride-side family (shown only on the bride's version).
+  familyData() {
+    if (this.whichSide() !== 'bride') return null;
+    return {
+      parentsEn: 'Daughter of Shri Rampal Singh & Smt. Rekha Singh',
+      parentsHi: 'सुपुत्री श्री रामपाल सिंह एवं श्रीमती रेखा सिंह',
+      rows: [
+        { role: 'Grandmother', roleHi: 'दादी', names: 'Smt. Rajkali Devi' },
+        { role: 'Brother & Sister-in-law', roleHi: 'भाई-भाभी', names: 'Puneet & Megha' },
+        { role: 'Sister & Brother-in-law', roleHi: 'बहन-जीजा', names: 'Ekta & Shashi' },
+        { role: 'Welcoming you', roleHi: 'स्वागताकांक्षी', names: 'Atul, Ashu, Mohit, Dhananjay, Kamaksh, Gaurav, Aviral, Daksh, Laksh, Dhanush' },
+        { role: 'Awaiting your presence', roleHi: 'दर्शनाभिलाषी', names: 'Swaram, Lakshmi Chandra, Dr. Dayanand, Ramphal, Naresh, Rajpal, Dinesh, Rahul Panwar, Siddharth, Digvijay Singh, Divakar Singh — and all relatives & friends' }
+      ]
+    };
   }
 
   isLandscape() { return window.innerWidth > window.innerHeight && window.innerWidth >= 900; }
@@ -475,6 +517,7 @@ class Component extends DCLogic {
   renderVals() {
     const showCover = this.props.showCover ?? true;
     const { phase } = this.state;
+    const fam = this.familyData();
     const d = Math.max(0, this.target - this.state.now);
     const pad = v => String(v).padStart(2, '0');
     const opening = phase === 'opening';
@@ -482,6 +525,10 @@ class Component extends DCLogic {
       ...this.buildDecor(),
       ...this.rsvpVals(),
       ...this.coupleNames(),
+      showFamily: !!fam,
+      parentsEn: fam ? fam.parentsEn : '',
+      parentsHi: fam ? fam.parentsHi : '',
+      familyRows: fam ? fam.rows : [],
       landscape: !!this.land,
       portrait: !this.land,
       showCoverNow: showCover && phase !== 'open',
