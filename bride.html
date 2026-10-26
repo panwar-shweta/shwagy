@@ -79,11 +79,22 @@ a:hover{color:#7d2c42;}
         <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:23px;color:#6e3d22;">{{ namesHi }}</div>
 
         <sc-if value="{{ showFamily }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:2px;">
-            <div style="font-size:15px;color:#5e3a2a;line-height:1.35;text-wrap:pretty;">{{ dadiEn }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:#6e4636;text-wrap:pretty;">{{ dadiHi }}</div>
-            <div style="font-size:15px;color:#5e3a2a;line-height:1.35;margin-top:4px;text-wrap:pretty;">{{ parentsEn }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:#6e4636;text-wrap:pretty;">{{ parentsHi }}</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="font-size:14px;color:#5e3a2a;line-height:1.3;text-wrap:pretty;">{{ dadiEn }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#7a5040;text-wrap:pretty;">{{ dadiHi }}</div>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="font-size:21px;font-weight:600;color:#6e3d22;line-height:1.1;">{{ brideName }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;color:#6e3d22;">{{ brideNameHi }}</div>
+            <div style="font-size:14px;color:#5e3a2a;line-height:1.35;margin-top:2px;text-wrap:pretty;">{{ brideParentEn }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#7a5040;text-wrap:pretty;">{{ brideParentHi }}</div>
+          </div>
+          <div style="font-family:'Great Vibes',cursive;font-size:32px;color:#c9a15c;line-height:1;margin:3px 0;">&amp;</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="font-size:21px;font-weight:600;color:#6e3d22;line-height:1.1;">{{ groomName }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;color:#6e3d22;">{{ groomNameHi }}</div>
+            <div style="font-size:14px;color:#5e3a2a;line-height:1.35;margin-top:2px;text-wrap:pretty;">{{ groomParentEn }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#7a5040;text-wrap:pretty;">{{ groomParentHi }}</div>
           </div>
         </sc-if>
 
@@ -102,6 +113,14 @@ a:hover{color:#7d2c42;}
         <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:17px;color:#5e3a2a;margin-top:6px;">शनिवार, २१ नवंबर २०२६</div>
 
         <div style="margin-top:18px;font-size:19px;font-weight:600;line-height:1.4;color:#4f2e20;">Imperial Garden &amp; Resorts<br>Ghaziabad, Uttar Pradesh</div>
+
+        <div style="margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <sc-for list="{{ scheduleRows }}" as="e" hint-placeholder-count="2">
+            <div style="font-size:15px;color:#5e3a2a;line-height:1.35;">
+              <span style="font-weight:600;color:#6e3d22;">{{ e.en }}</span><span style="font-family:'Tiro Devanagari Hindi',serif;color:#8a6050;"> · {{ e.hi }}</span><span style="color:#9a6a22;font-weight:600;"> — {{ e.time }}</span>
+            </div>
+          </sc-for>
+        </div>
       </div>
     </div>
 
@@ -306,8 +325,12 @@ class Component extends DCLogic {
     return {
       dadiEn: 'Granddaughter of Smt. Rajkali Devi',
       dadiHi: 'पौत्री श्रीमती राजकली देवी',
-      parentsEn: 'Daughter of Shri Rampal Singh & Smt. Rekha Singh',
-      parentsHi: 'सुपुत्री श्री रामपाल सिंह एवं श्रीमती रेखा सिंह',
+      brideName: 'Shweta', brideNameHi: 'श्वेता',
+      brideParentEn: 'Daughter of Shri Rampal Singh & Smt. Rekha Singh',
+      brideParentHi: 'सुपुत्री श्री रामपाल सिंह एवं श्रीमती रेखा सिंह',
+      groomName: 'Pragy', groomNameHi: 'प्रज्ञ',
+      groomParentEn: 'Son of Mrs. Rachna Agarwal',
+      groomParentHi: 'सुपुत्र श्रीमती रचना अग्रवाल',
       rows: [
         { role: 'Brother & Sister-in-law', roleHi: 'भाई-भाभी', names: 'Puneet & Megha' },
         { role: 'Sister & Brother-in-law', roleHi: 'बहन-जीजा', names: 'Ekta & Shashi' },
@@ -522,6 +545,13 @@ class Component extends DCLogic {
     };
   }
 
+  // Version-specific event timings shown under the venue.
+  eventTimes() {
+    return this.whichSide() === 'groom'
+      ? [{ en: 'Baraat', hi: 'बारात', time: '9:30 AM' }, { en: 'Lunch / Pritibhoj', hi: 'प्रीतिभोज', time: '1:00 PM' }]
+      : [{ en: 'Pritibhoj', hi: 'प्रीतिभोज', time: '1:00 PM' }];
+  }
+
   renderVals() {
     const showCover = this.props.showCover ?? true;
     const { phase } = this.state;
@@ -536,9 +566,16 @@ class Component extends DCLogic {
       showFamily: !!fam,
       dadiEn: fam ? fam.dadiEn : '',
       dadiHi: fam ? fam.dadiHi : '',
-      parentsEn: fam ? fam.parentsEn : '',
-      parentsHi: fam ? fam.parentsHi : '',
+      brideName: fam ? fam.brideName : '',
+      brideNameHi: fam ? fam.brideNameHi : '',
+      brideParentEn: fam ? fam.brideParentEn : '',
+      brideParentHi: fam ? fam.brideParentHi : '',
+      groomName: fam ? fam.groomName : '',
+      groomNameHi: fam ? fam.groomNameHi : '',
+      groomParentEn: fam ? fam.groomParentEn : '',
+      groomParentHi: fam ? fam.groomParentHi : '',
       familyRows: fam ? fam.rows : [],
+      scheduleRows: this.eventTimes(),
       landscape: !!this.land,
       portrait: !this.land,
       showCoverNow: showCover && phase !== 'open',
