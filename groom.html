@@ -246,7 +246,7 @@ a:hover{color:#7d2c42;}
   </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;musicUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./assets/music.mp3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;petalCount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:5,&quot;max&quot;:80,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;musicUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./assets/music.mp3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;autoScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbz3S8t47jVV630sTtwChzcgwfKg45wNfBDdhFV1NveH8s_FAk3d0SfLjHkkvHEoe9so/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP&quot;}}">
 class Component extends DCLogic {
   state = { phase: 'closed', now: Date.now(), rName: '', rPhone: '', rAttend: 'yes', rGuests: 1, rMsg: '', rSide: this.whichSide(), rsvpDone: false, muted: false };
   target = new Date('2026-11-21T00:00:00+05:30').getTime();
@@ -337,9 +337,33 @@ class Component extends DCLogic {
     this.playVideos = () => document.querySelectorAll('video').forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; v.play().catch(() => {}); });
     this.playVideos();
     document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
+    if (!(this.props.showCover ?? true)) this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 2800);
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); clearTimeout(this.autoT); this._stopAuto && this._stopAuto(); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
   componentDidUpdate() { try { const t = this.coupleNames().title; if (document.title !== t) document.title = t; } catch (e) {} }
+
+  // Gentle auto-scroll after the cover opens; stops on any manual scroll/touch.
+  startAutoScroll() {
+    if (this._autoOn || !(this.props.autoScroll ?? true)) return;
+    this._autoOn = true;
+    const stop = () => {
+      this._autoOn = false;
+      if (this._autoRaf) { cancelAnimationFrame(this._autoRaf); this._autoRaf = null; }
+      ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(ev => window.removeEventListener(ev, stop));
+    };
+    this._stopAuto = stop;
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(ev => window.addEventListener(ev, stop, { passive: true }));
+    let last = performance.now();
+    const step = (now) => {
+      if (!this._autoOn) return;
+      const dt = Math.min(50, now - last); last = now;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= max - 1) { stop(); return; }
+      window.scrollBy(0, 0.08 * dt);
+      this._autoRaf = requestAnimationFrame(step);
+    };
+    this._autoRaf = requestAnimationFrame(step);
+  }
 
   getPetals(n) {
     if (this._petals && this._petals.length === n) return this._petals;
@@ -470,7 +494,10 @@ class Component extends DCLogic {
         this.setState({ phase: 'opening' });
         this.playVideos && this.playVideos();
         this.startMusic && this.startMusic();
-        this.t = setTimeout(() => this.setState({ phase: 'open' }), 1400);
+        this.t = setTimeout(() => {
+          this.setState({ phase: 'open' });
+          this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 2200);
+        }, 1400);
       },
       muted: this.state.muted,
       musicIcon: this.state.muted ? '🔇' : '🔊',
