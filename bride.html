@@ -78,6 +78,15 @@ a:hover{color:#7d2c42;}
         <div style="font-size:clamp(26px,7.5vw,32px);font-weight:700;letter-spacing:.08em;color:#6e3d22;">{{ namesEn }}</div>
         <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:23px;color:#6e3d22;">{{ namesHi }}</div>
 
+        <sc-if value="{{ showFamily }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="font-size:15px;color:#5e3a2a;line-height:1.35;text-wrap:pretty;">{{ dadiEn }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:#6e4636;text-wrap:pretty;">{{ dadiHi }}</div>
+            <div style="font-size:15px;color:#5e3a2a;line-height:1.35;margin-top:4px;text-wrap:pretty;">{{ parentsEn }}</div>
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:#6e4636;text-wrap:pretty;">{{ parentsHi }}</div>
+          </div>
+        </sc-if>
+
         <div style="display:flex;align-items:center;gap:10px;width:78%;margin:14px 0 10px;">
           <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c9a15c);"></div>
           <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
@@ -100,6 +109,31 @@ a:hover{color:#7d2c42;}
       <div style="width:3px;height:8px;border-radius:2px;background:#b9915a;animation:pulse 1.8s ease-in-out infinite;"></div>
     </div>
   </section>
+
+  <!-- FAMILY (bride version only) -->
+  <sc-if value="{{ showFamily }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="Family" style="position:relative;display:flex;justify-content:center;padding:84px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
+      <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:470px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
+        <div style="border:1px solid #e3c991;border-radius:6px;padding:38px 26px 32px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
+          <div style="font-family:'Great Vibes',cursive;font-size:clamp(46px,13vw,62px);line-height:1;color:#b13f5d;">With Love</div>
+          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;color:#a3506a;">सप्रेम निमंत्रण</div>
+          <div style="display:flex;align-items:center;gap:10px;width:62%;margin:16px 0 8px;">
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+            <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:15px;width:100%;margin-top:4px;">
+            <sc-for list="{{ familyRows }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9a6a22;font-weight:600;">{{ r.role }} <span style="font-family:'Tiro Devanagari Hindi',serif;font-weight:400;letter-spacing:0;text-transform:none;color:#8a6050;">· {{ r.roleHi }}</span></div>
+                <div style="font-size:17px;color:#4f2e20;line-height:1.5;text-wrap:pretty;">{{ r.names }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
 
   <!-- SAVE THE DATE -->
   <section data-screen-label="02 Save the Date" style="position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:80px 20px;background:radial-gradient(ellipse at 30% 40%,#fffaf6,#f6ece6 70%);overflow:hidden;">
@@ -229,33 +263,6 @@ a:hover{color:#7d2c42;}
     </div>
   </section>
 
-  <!-- FAMILY (bride version only) -->
-  <sc-if value="{{ showFamily }}" hint-placeholder-val="{{ true }}">
-    <section data-screen-label="05 Family" style="position:relative;display:flex;justify-content:center;padding:84px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
-      <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:470px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
-        <div style="border:1px solid #e3c991;border-radius:6px;padding:38px 26px 32px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
-          <div style="font-family:'Great Vibes',cursive;font-size:clamp(46px,13vw,62px);line-height:1;color:#b13f5d;">With Love</div>
-          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;color:#a3506a;">सप्रेम निमंत्रण</div>
-          <div style="margin-top:12px;font-size:17px;font-weight:600;color:#4f2e20;text-wrap:pretty;">{{ parentsEn }}</div>
-          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;text-wrap:pretty;">{{ parentsHi }}</div>
-          <div style="display:flex;align-items:center;gap:10px;width:62%;margin:18px 0 6px;">
-            <div style="flex:1;height:1px;background:#c9a15c;"></div>
-            <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
-            <div style="flex:1;height:1px;background:#c9a15c;"></div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:15px;width:100%;margin-top:8px;">
-            <sc-for list="{{ familyRows }}" as="r" hint-placeholder-count="5">
-              <div style="display:flex;flex-direction:column;gap:3px;">
-                <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9a6a22;font-weight:600;">{{ r.role }} <span style="font-family:'Tiro Devanagari Hindi',serif;font-weight:400;letter-spacing:0;text-transform:none;color:#8a6050;">· {{ r.roleHi }}</span></div>
-                <div style="font-size:17px;color:#4f2e20;line-height:1.5;text-wrap:pretty;">{{ r.names }}</div>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-      </div>
-    </section>
-  </sc-if>
-
   <!-- CLOSING -->
   <section data-screen-label="05 Closing" style="position:relative;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:90px 20px 0;background:linear-gradient(180deg,#f5e4e1,#f2d6d8);overflow:hidden;">
     <div data-reveal="1" style="position:relative;z-index:2;max-width:480px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;">
@@ -297,10 +304,11 @@ class Component extends DCLogic {
   familyData() {
     if (this.whichSide() !== 'bride') return null;
     return {
+      dadiEn: 'Granddaughter of Smt. Rajkali Devi',
+      dadiHi: 'पौत्री श्रीमती राजकली देवी',
       parentsEn: 'Daughter of Shri Rampal Singh & Smt. Rekha Singh',
       parentsHi: 'सुपुत्री श्री रामपाल सिंह एवं श्रीमती रेखा सिंह',
       rows: [
-        { role: 'Grandmother', roleHi: 'दादी', names: 'Smt. Rajkali Devi' },
         { role: 'Brother & Sister-in-law', roleHi: 'भाई-भाभी', names: 'Puneet & Megha' },
         { role: 'Sister & Brother-in-law', roleHi: 'बहन-जीजा', names: 'Ekta & Shashi' },
         { role: 'Welcoming you', roleHi: 'स्वागताकांक्षी', names: 'Atul, Ashu, Mohit, Dhananjay, Kamaksh, Gaurav, Aviral, Daksh, Laksh, Dhanush' },
@@ -526,6 +534,8 @@ class Component extends DCLogic {
       ...this.rsvpVals(),
       ...this.coupleNames(),
       showFamily: !!fam,
+      dadiEn: fam ? fam.dadiEn : '',
+      dadiHi: fam ? fam.dadiHi : '',
       parentsEn: fam ? fam.parentsEn : '',
       parentsHi: fam ? fam.parentsHi : '',
       familyRows: fam ? fam.rows : [],
