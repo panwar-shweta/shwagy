@@ -412,7 +412,7 @@ class Component extends DCLogic {
     this.playVideos = () => document.querySelectorAll('video').forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; v.play().catch(() => {}); });
     this.playVideos();
     document.querySelectorAll('[data-shimmer]').forEach(el => { el.style.animation = 'shimmer 5s linear infinite'; });
-    if (!(this.props.showCover ?? true)) this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 1600);
+    if (!(this.props.showCover ?? true)) this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 1000);
   }
   componentWillUnmount() { window.removeEventListener('resize', this.onResize); ['scroll', 'touchstart', 'click', 'visibilitychange'].forEach(ev => window.removeEventListener(ev, this.kick)); clearInterval(this.timer); this.io && this.io.disconnect(); clearTimeout(this.t); clearTimeout(this.autoT); this._stopAuto && this._stopAuto(); this.bgm && this.bgm.pause(); if (this._petalRoot) setTimeout(() => { try { this._petalRoot.unmount(); } catch (e) {} }, 0); this._bgHost && this._bgHost.remove(); this._petalHost && this._petalHost.remove(); }
   componentDidUpdate() { try { const t = this.coupleNames().title; if (document.title !== t) document.title = t; } catch (e) {} }
@@ -586,10 +586,8 @@ class Component extends DCLogic {
         this.setState({ phase: 'opening' });
         this.playVideos && this.playVideos();
         this.startMusic && this.startMusic();
-        this.t = setTimeout(() => {
-          this.setState({ phase: 'open' });
-          this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 1000);
-        }, 1400);
+        this.t = setTimeout(() => this.setState({ phase: 'open' }), 1400);
+        this.autoT = setTimeout(() => this.startAutoScroll && this.startAutoScroll(), 1000);
       },
       muted: this.state.muted,
       musicIcon: this.state.muted ? '🔇' : '🔊',
