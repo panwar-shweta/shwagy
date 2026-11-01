@@ -3,6 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // Side lock (see bride/groom pages): send a browser that already picked a side straight back to it.
+  (function () {
+    try {
+      var K = 'shwagy-side';
+      if (new URLSearchParams(location.search).has('unlock')) { localStorage.removeItem(K); document.cookie = K + '=; path=/; max-age=0'; return; }
+      var m = document.cookie.match(/(?:^|; )shwagy-side=(bride|groom)/);
+      var saved = localStorage.getItem(K) || (m && m[1]);
+      if (saved === 'bride' || saved === 'groom') location.replace('/' + saved);
+    } catch (e) {}
+  })();
+</script>
 <title>Shweta &amp; Pragy · 21.11.2026</title>
 <meta name="description" content="Wedding invitation — Shweta &amp; Pragy, 21 November 2026, Ghaziabad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">

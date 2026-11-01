@@ -3,6 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // Side lock: the first side (bride/groom) a browser opens is remembered; the other side then
+  // redirects back to it. Same rule as whichSide(). Add ?unlock to any URL to clear it on this device.
+  (function () {
+    try {
+      var K = 'shwagy-side', q = new URLSearchParams(location.search);
+      if (q.has('unlock')) { localStorage.removeItem(K); document.cookie = K + '=; path=/; max-age=0'; return; }
+      var path = location.pathname.toLowerCase(), f = (q.get('for') || '').toLowerCase();
+      var side = (/groom/.test(path) || /^(g|groom|p|pragy)/.test(f)) ? 'groom' : 'bride';
+      var m = document.cookie.match(/(?:^|; )shwagy-side=(bride|groom)/);
+      var saved = localStorage.getItem(K) || (m && m[1]);
+      if (saved && saved !== side) { location.replace('/' + saved); return; }
+      localStorage.setItem(K, side);
+      document.cookie = K + '=' + side + '; path=/; max-age=31536000; samesite=lax';
+    } catch (e) {}
+  })();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
