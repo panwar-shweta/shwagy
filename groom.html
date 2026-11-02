@@ -206,15 +206,17 @@ a:hover{color:#7d2c42;}
         <div style="width:8px;height:8px;background:#b13f5d;transform:rotate(45deg);"></div>
         <div style="flex:1;height:1px;background:#c25a75;"></div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:400px;">
-        <sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
-          <div style="background:rgba(255,255,255,.85);border:1px solid #dcbd84;border-radius:6px;padding:14px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;">
-            <div style="font-size:34px;font-weight:600;line-height:1;color:#8a3a4e;font-variant-numeric:tabular-nums;">{{ c.value }}</div>
-            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7a5040;">{{ c.en }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#8a6050;">{{ c.hi }}</div>
-          </div>
-        </sc-for>
-      </div>
+      <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:400px;">
+          <sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
+            <div style="background:rgba(255,255,255,.85);border:1px solid #dcbd84;border-radius:6px;padding:14px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div style="font-size:34px;font-weight:600;line-height:1;color:#8a3a4e;font-variant-numeric:tabular-nums;">{{ c.value }}</div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7a5040;">{{ c.en }}</div>
+              <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:13px;color:#8a6050;">{{ c.hi }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
     </div>
   </section>
 
@@ -247,72 +249,74 @@ a:hover{color:#7d2c42;}
     </div>
   </section>
 
-  <!-- RSVP -->
-  <section data-screen-label="04 RSVP" style="position:relative;display:flex;justify-content:center;padding:80px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
-    <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:440px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
-      <div style="border:1px solid #e3c991;border-radius:6px;padding:40px 26px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
-        <div style="font-family:'Great Vibes',cursive;font-size:clamp(52px,15vw,68px);line-height:1;color:#b13f5d;">RSVP</div>
-        <div style="font-size:18px;font-weight:600;color:#4f2e20;">Kindly let us know if you can join</div>
-        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">कृपया अपनी उपस्थिति की पुष्टि करें</div>
-        <div style="display:flex;align-items:center;gap:10px;width:60%;margin:14px 0 18px;">
-          <div style="flex:1;height:1px;background:#c9a15c;"></div>
-          <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
-          <div style="flex:1;height:1px;background:#c9a15c;"></div>
-        </div>
-
-        <sc-if value="{{ rsvpOpen }}" hint-placeholder-val="{{ true }}">
-          <form onSubmit="{{ submitRsvp }}" style="width:100%;display:flex;flex-direction:column;gap:16px;text-align:left;">
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Name · नाम</span>
-              <input value="{{ rName }}" onChange="{{ setName }}" required="{{ true }}" placeholder="Your full name" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
-            </label>
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Phone · फ़ोन</span>
-              <input type="tel" value="{{ rPhone }}" onChange="{{ setPhone }}" placeholder="+91" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
-            </label>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Will you attend? · क्या आप आएंगे?</span>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <sc-for list="{{ attendOpts }}" as="o" hint-placeholder-count="2">
-                  <button type="button" onClick="{{ o.pick }}" style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;padding:12px 8px;border-radius:6px;cursor:pointer;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s;">
-                    <span>{{ o.en }}</span>
-                    <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;font-weight:400;">{{ o.hi }}</span>
-                  </button>
-                </sc-for>
-              </div>
-            </div>
-            <sc-if value="{{ attending }}" hint-placeholder-val="{{ true }}">
+  <!-- RSVP (groom version only) -->
+  <sc-if value="{{ showRsvp }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="04 RSVP" style="position:relative;display:flex;justify-content:center;padding:80px 20px;background:radial-gradient(ellipse at 50% 30%,#fffaf6,#f6ece6 70%);">
+      <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:440px;background:rgba(255,250,246,.95);border:1.5px solid #c9a15c;border-radius:10px;padding:10px;box-shadow:0 18px 40px rgba(150,80,90,.18);">
+        <div style="border:1px solid #e3c991;border-radius:6px;padding:40px 26px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;">
+          <div style="font-family:'Great Vibes',cursive;font-size:clamp(52px,15vw,68px);line-height:1;color:#b13f5d;">RSVP</div>
+          <div style="font-size:18px;font-weight:600;color:#4f2e20;">Kindly let us know if you can join</div>
+          <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">कृपया अपनी उपस्थिति की पुष्टि करें</div>
+          <div style="display:flex;align-items:center;gap:10px;width:60%;margin:14px 0 18px;">
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+            <div style="width:7px;height:7px;background:#c9a15c;transform:rotate(45deg);"></div>
+            <div style="flex:1;height:1px;background:#c9a15c;"></div>
+          </div>
+  
+          <sc-if value="{{ rsvpOpen }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ submitRsvp }}" style="width:100%;display:flex;flex-direction:column;gap:16px;text-align:left;">
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Name · नाम</span>
+                <input value="{{ rName }}" onChange="{{ setName }}" required="{{ true }}" placeholder="Your full name" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Phone · फ़ोन</span>
+                <input type="tel" value="{{ rPhone }}" onChange="{{ setPhone }}" placeholder="+91" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);">
+              </label>
               <div style="display:flex;flex-direction:column;gap:8px;">
-                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Number of guests · मेहमानों की संख्या</span>
-                <div style="display:flex;align-items:center;gap:14px;">
-                  <button type="button" onClick="{{ decGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">−</button>
-                  <div style="font-size:30px;font-weight:600;color:#4f2e20;min-width:32px;text-align:center;">{{ rGuests }}</div>
-                  <button type="button" onClick="{{ incGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">+</button>
+                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Will you attend? · क्या आप आएंगे?</span>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <sc-for list="{{ attendOpts }}" as="o" hint-placeholder-count="2">
+                    <button type="button" onClick="{{ o.pick }}" style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;padding:12px 8px;border-radius:6px;cursor:pointer;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s;">
+                      <span>{{ o.en }}</span>
+                      <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;font-weight:400;">{{ o.hi }}</span>
+                    </button>
+                  </sc-for>
                 </div>
               </div>
-            </sc-if>
-            <label style="display:flex;flex-direction:column;gap:6px;">
-              <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Wishes for the couple · शुभकामनाएँ</span>
-              <textarea value="{{ rMsg }}" onChange="{{ setMsg }}" rows="3" placeholder="Optional" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;resize:vertical;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);"></textarea>
-            </label>
-            <button type="submit" style="margin-top:6px;padding:14px 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#c4506f,#9e3350);color:#fff8f3;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 20px rgba(158,51,80,.3);display:flex;flex-direction:column;align-items:center;gap:2px;" style-hover="transform:translateY(-2px);box-shadow:0 12px 26px rgba(158,51,80,.38);">
-              <span>Send RSVP</span>
-              <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;letter-spacing:0;text-transform:none;font-weight:400;">भेजें</span>
-            </button>
-          </form>
-        </sc-if>
-
-        <sc-if value="{{ rsvpDone }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:10px 0;">
-            <div style="font-family:'Great Vibes',cursive;font-size:48px;line-height:1.1;color:#9a6a22;">Thank you</div>
-            <div style="font-size:19px;font-weight:600;color:#4f2e20;text-wrap:pretty;">{{ thanksEn }}</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">{{ thanksHi }}</div>
-            <button type="button" onClick="{{ resetRsvp }}" style="margin-top:10px;background:none;border:0;font-family:'Cormorant Garamond',serif;font-size:16px;color:#a8455f;text-decoration:underline;cursor:pointer;">Edit response</button>
-          </div>
-        </sc-if>
+              <sc-if value="{{ attending }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Number of guests · मेहमानों की संख्या</span>
+                  <div style="display:flex;align-items:center;gap:14px;">
+                    <button type="button" onClick="{{ decGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">−</button>
+                    <div style="font-size:30px;font-weight:600;color:#4f2e20;min-width:32px;text-align:center;">{{ rGuests }}</div>
+                    <button type="button" onClick="{{ incGuests }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #c9a15c;background:#fff;font-size:22px;color:#6e3d22;cursor:pointer;">+</button>
+                  </div>
+                </div>
+              </sc-if>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6e3d22;">Wishes for the couple · शुभकामनाएँ</span>
+                <textarea value="{{ rMsg }}" onChange="{{ setMsg }}" rows="3" placeholder="Optional" style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#4f2e20;padding:12px 14px;border:1px solid #d9bd85;border-radius:6px;background:#fff;outline:none;resize:vertical;" style-focus="border-color:#b13f5d;box-shadow:0 0 0 3px rgba(177,63,93,.12);"></textarea>
+              </label>
+              <button type="submit" style="margin-top:6px;padding:14px 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#c4506f,#9e3350);color:#fff8f3;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 20px rgba(158,51,80,.3);display:flex;flex-direction:column;align-items:center;gap:2px;" style-hover="transform:translateY(-2px);box-shadow:0 12px 26px rgba(158,51,80,.38);">
+                <span>Send RSVP</span>
+                <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:14px;letter-spacing:0;text-transform:none;font-weight:400;">भेजें</span>
+              </button>
+            </form>
+          </sc-if>
+  
+          <sc-if value="{{ rsvpDone }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:10px 0;">
+              <div style="font-family:'Great Vibes',cursive;font-size:48px;line-height:1.1;color:#9a6a22;">Thank you</div>
+              <div style="font-size:19px;font-weight:600;color:#4f2e20;text-wrap:pretty;">{{ thanksEn }}</div>
+              <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#5e3a2a;">{{ thanksHi }}</div>
+              <button type="button" onClick="{{ resetRsvp }}" style="margin-top:10px;background:none;border:0;font-family:'Cormorant Garamond',serif;font-size:16px;color:#a8455f;text-decoration:underline;cursor:pointer;">Edit response</button>
+            </div>
+          </sc-if>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </sc-if>
 
   <!-- CLOSING -->
   <section data-screen-label="05 Closing" style="position:relative;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:90px 20px 0;background:linear-gradient(180deg,#f5e4e1,#f2d6d8);overflow:hidden;">
@@ -606,8 +610,10 @@ class Component extends DCLogic {
       showDadi: this.whichSide() === 'bride',
       showParents: this.whichSide() === 'bride',   // parents' names only on the bride's version
       showInvocation: this.whichSide() === 'bride',   // Ganesh vandana + shlok only on the bride's version
-      dadiEn: 'Granddaughter of Late Shri Phool Singh & Smt. Rajkali Devi',
-      dadiHi: 'पौत्री स्व. श्री फूल सिंह एवं श्रीमती राजकली देवी',
+      showCountdown: this.whichSide() === 'groom',   // no countdown on the bride's version
+      showRsvp: this.whichSide() === 'groom',        // no RSVP on the bride's version
+      dadiEn: 'Granddaughter of Smt. Rajkali Devi & Late Shri Phool Singh',
+      dadiHi: 'पौत्री श्रीमती राजकली देवी एवं स्व. श्री फूल सिंह',
       p1Name: pair[0].name, p1NameHi: pair[0].nameHi, p1ParentEn: pair[0].parentEn, p1ParentHi: pair[0].parentHi,
       p2Name: pair[1].name, p2NameHi: pair[1].nameHi, p2ParentEn: pair[1].parentEn, p2ParentHi: pair[1].parentHi,
       familyRows: fam ? fam.rows : [],
