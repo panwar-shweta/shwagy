@@ -34,6 +34,8 @@ html{margin:0;padding:0;background:#f5e4e1;overflow-x:clip;}body{margin:0;paddin
 *{box-sizing:border-box;}
 a{color:#a8455f;}
 a:hover{color:#7d2c42;}
+/* invitation arch card: keep wrapped lines even (no lone words like "हैं") */
+[data-arch-card] div{text-wrap:balance;}
 @keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(0deg);}100%{transform:translate3d(var(--dx),112vh,0) rotate(var(--rot));}}
 @keyframes sway{0%,100%{transform:translateX(0);}50%{transform:translateX(28px);}}
 @keyframes shimmer{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
@@ -76,7 +78,7 @@ a:hover{color:#7d2c42;}
       <video src="./assets/lotus-pond.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" style="width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;"></video>
     </div>
 
-    <div data-reveal="1" style="position:relative;z-index:1;width:100%;max-width:420px;padding:110px 34px 120px;text-align:center;">
+    <div data-reveal="1" data-arch-card="1" style="position:relative;z-index:1;width:100%;max-width:420px;padding:168px 28px 168px;text-align:center;">
       <svg viewBox="0 0 300 1000" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 18px 40px rgba(150,80,90,.18));">
         <path d="M0 850 V150 C0 120 20 110 40 108 C60 106 70 90 90 80 C120 66 140 40 150 0 C160 40 180 66 210 80 C230 90 240 106 260 108 C280 110 300 120 300 150 V850 C300 880 280 890 260 892 C240 894 230 910 210 920 C180 934 160 960 150 1000 C140 960 120 934 90 920 C70 910 60 894 40 892 C20 890 0 880 0 850 Z" fill="rgba(250,226,226,0.94)" stroke="#c9a15c" stroke-width="2" vector-effect="non-scaling-stroke"></path>
         <path d="M12 845 V156 C12 132 28 122 44 120 C64 117 76 102 96 92 C124 78 142 54 150 22 C158 54 176 78 204 92 C224 102 236 117 256 120 C272 122 288 132 288 156 V845 C288 868 272 878 256 880 C236 883 224 898 204 908 C176 922 158 946 150 978 C142 946 124 922 96 908 C76 898 64 883 44 880 C28 878 12 868 12 845 Z" fill="none" stroke="#dcbd84" stroke-width="1" vector-effect="non-scaling-stroke"></path>
