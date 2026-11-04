@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
   // Side lock (see bride/groom pages): send a browser that already picked a side straight back to it.
-  (function () {
+  // The bride's version is taken down on the live site (code kept): everyone goes to the groom's page.
+  // Set to true to bring back the bride/groom chooser. (Bride stays viewable on localhost.)
+  var BRIDE_LIVE = false;
+  if (!(BRIDE_LIVE || /^(localhost|127\.)/.test(location.hostname))) location.replace('/groom');
+  else (function () {
     try {
       var K = 'shwagy-side';
       if (new URLSearchParams(location.search).has('unlock')) { localStorage.removeItem(K); document.cookie = K + '=; path=/; max-age=0'; return; }

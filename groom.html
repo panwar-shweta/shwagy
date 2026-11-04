@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
+  // The bride's version is taken down on the live site (all code kept). Set to true to bring it back.
+  // Still viewable on localhost so the export scripts (record.js / pdf.js) can render it.
+  var BRIDE_LIVE = false;
+  window.SHWAGY_BRIDE_LIVE = BRIDE_LIVE || /^(localhost|127\.)/.test(location.hostname);
+</script>
+<script>
   // Side lock: the first side (bride/groom) a browser opens is remembered; the other side then
   // redirects back to it. Same rule as whichSide(). Add ?unlock to any URL to clear it on this device.
   (function () {
@@ -12,6 +18,7 @@
       if (q.has('unlock')) { localStorage.removeItem(K); document.cookie = K + '=; path=/; max-age=0'; return; }
       var path = location.pathname.toLowerCase(), f = (q.get('for') || '').toLowerCase();
       var side = (/groom/.test(path) || /^(g|groom|p|pragy)/.test(f)) ? 'groom' : 'bride';
+      if (!window.SHWAGY_BRIDE_LIVE) { if (side === 'bride') location.replace('/groom'); return; }   // bride off: no lock, send to groom
       var m = document.cookie.match(/(?:^|; )shwagy-side=(bride|groom)/);
       var saved = localStorage.getItem(K) || (m && m[1]);
       if (saved && saved !== side) { location.replace('/' + saved); return; }
@@ -350,7 +357,7 @@ class Component extends DCLogic {
       const q = (new URLSearchParams(location.search).get('for') || '').toLowerCase();
       if (/groom/.test(path) || /^(g|groom|p|pragy)/.test(q)) return 'groom';
     } catch (e) {}
-    return 'bride';
+    return window.SHWAGY_BRIDE_LIVE ? 'bride' : 'groom';
   }
   coupleNames() {
     return this.whichSide() === 'groom'
